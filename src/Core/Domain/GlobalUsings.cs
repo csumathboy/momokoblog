@@ -1,0 +1,1 @@
+﻿global using csumathboy.Domain.Common.Contracts;

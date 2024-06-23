@@ -1,0 +1,17 @@
+global using Ardalis.Specification;
+global using FluentValidation;
+global using csumathboy.Application.Common.Events;
+global using csumathboy.Application.Common.Exceptions;
+global using csumathboy.Application.Common.FileStorage;
+global using csumathboy.Application.Common.Interfaces;
+global using csumathboy.Application.Common.Models;
+global using csumathboy.Application.Common.Persistence;
+global using csumathboy.Application.Common.Specification;
+global using csumathboy.Application.Common.Validation;
+global using csumathboy.Domain.Catalog;
+global using csumathboy.Domain.Common;
+global using csumathboy.Domain.Common.Contracts;
+global using csumathboy.Shared.Notifications;
+global using MediatR;
+global using Microsoft.Extensions.Localization;
+global using Microsoft.Extensions.Logging;

@@ -1,0 +1,7 @@
+{
+  "LoggerSettings": {
+    "AppName": "csumathboy",
+    "WriteToFile": false,
+    "StructuredConsoleLogging": true
+  }
+}
