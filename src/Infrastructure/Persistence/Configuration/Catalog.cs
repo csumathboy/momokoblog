@@ -12,8 +12,8 @@ public class BrandConfig : IEntityTypeConfiguration<Brand>
         builder.IsMultiTenant();
 
         builder
-            .Property(b => b.Name)
-                .HasMaxLength(256);
+            .Property(b => b.Name).IsRequired()
+                .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
     }
 }
 
@@ -24,11 +24,11 @@ public class ProductConfig : IEntityTypeConfiguration<Product>
         builder.IsMultiTenant();
 
         builder
-            .Property(b => b.Name)
-                .HasMaxLength(1024);
+            .Property(b => b.Name).IsRequired()
+                .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
 
         builder
             .Property(p => p.ImagePath)
-                .HasMaxLength(2048);
+                .HasMaxLength(DataSchemaConstants.DEFAULT_IMAGEURL_LENGTH);
     }
 }

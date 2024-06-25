@@ -1,4 +1,4 @@
-﻿namespace csumathboy.Application.Catalog.Products;
+﻿namespace csumathboy.Application.Catalog.Products.Specifications;
 
 public class ProductsBySearchRequestWithBrandsSpec : EntitiesByPaginationFilterSpec<Product, ProductDto>
 {

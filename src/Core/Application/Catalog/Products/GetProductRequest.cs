@@ -1,4 +1,6 @@
-﻿namespace csumathboy.Application.Catalog.Products;
+﻿using csumathboy.Application.Catalog.Products.Specifications;
+
+namespace csumathboy.Application.Catalog.Products;
 
 public class GetProductRequest : IRequest<ProductDetailsDto>
 {
