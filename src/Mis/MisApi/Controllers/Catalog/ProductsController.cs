@@ -15,7 +15,7 @@ public class ProductsController : VersionedApiController
     [HttpGet("{id:guid}")]
     [MustHavePermission(FSHAction.View, FSHResource.Products)]
     [OpenApiOperation("Get product details.", "")]
-    public Task<ProductDetailsDto> GetAsync(Guid id)
+    public Task<ClassificationDetailsDto> GetAsync(Guid id)
     {
         return Mediator.Send(new GetProductRequest(id));
     }
@@ -39,7 +39,7 @@ public class ProductsController : VersionedApiController
     [HttpPut("{id:guid}")]
     [MustHavePermission(FSHAction.Update, FSHResource.Products)]
     [OpenApiOperation("Update a product.", "")]
-    public async Task<ActionResult<Guid>> UpdateAsync(UpdateProductRequest request, Guid id)
+    public async Task<ActionResult<Guid>> UpdateAsync(UpdateClassificationRequest request, Guid id)
     {
         return id != request.Id
             ? BadRequest()
