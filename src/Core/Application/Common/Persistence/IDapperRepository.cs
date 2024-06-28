@@ -13,8 +13,7 @@ public interface IDapperRepository : ITransientService
     /// <param name="transaction">The transaction to be performed.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
     /// <returns>Returns <see cref="Task"/> of <see cref="IReadOnlyCollection{T}"/>.</returns>
-    Task<IReadOnlyList<T>> QueryAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
-    where T : class, IEntity;
+    Task<IReadOnlyList<T>> QueryAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get a <typeparamref name="T"/> using raw sql string with parameters.
@@ -25,8 +24,7 @@ public interface IDapperRepository : ITransientService
     /// <param name="transaction">The transaction to be performed.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
     /// <returns>Returns <see cref="Task"/> of <typeparamref name="T"/>.</returns>
-    Task<T?> QueryFirstOrDefaultAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
-    where T : class, IEntity;
+    Task<T?> QueryFirstOrDefaultAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get a <typeparamref name="T"/> using raw sql string with parameters.
@@ -37,6 +35,5 @@ public interface IDapperRepository : ITransientService
     /// <param name="transaction">The transaction to be performed.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
     /// <returns>Returns <see cref="Task"/> of <typeparamref name="T"/>.</returns>
-    Task<T> QuerySingleAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
-    where T : class, IEntity;
+    Task<T> QuerySingleAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default);
 }

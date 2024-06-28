@@ -7,6 +7,9 @@ using csumathboy.Infrastructure.Persistence.Context;
 
 namespace csumathboy.Infrastructure.Persistence.Repository;
 
+/// <summary>
+/// For high performance SearchData using Dapper instead of EF.
+/// </summary>
 public class DapperRepository : IDapperRepository
 {
     private readonly ApplicationDbContext _dbContext;
@@ -14,12 +17,11 @@ public class DapperRepository : IDapperRepository
     public DapperRepository(ApplicationDbContext dbContext) => _dbContext = dbContext;
 
     public async Task<IReadOnlyList<T>> QueryAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
-    where T : class, IEntity =>
+     =>
         (await _dbContext.Connection.QueryAsync<T>(sql, param, transaction))
             .AsList();
 
     public async Task<T?> QueryFirstOrDefaultAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
-    where T : class, IEntity
     {
         if (_dbContext.Model.GetMultiTenantEntityTypes().Any(t => t.ClrType == typeof(T)))
         {
@@ -30,7 +32,6 @@ public class DapperRepository : IDapperRepository
     }
 
     public Task<T> QuerySingleAsync<T>(string sql, object? param = null, IDbTransaction? transaction = null, CancellationToken cancellationToken = default)
-    where T : class, IEntity
     {
         if (_dbContext.Model.GetMultiTenantEntityTypes().Any(t => t.ClrType == typeof(T)))
         {

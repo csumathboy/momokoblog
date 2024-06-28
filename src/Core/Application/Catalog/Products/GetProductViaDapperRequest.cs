@@ -1,4 +1,7 @@
-﻿using Mapster;
+﻿using csumathboy.Application.Catalog.Interfaces;
+using csumathboy.Domain.PostsAggregate;
+using Mapster;
+using System;
 
 namespace csumathboy.Application.Catalog.Products;
 
@@ -11,30 +14,17 @@ public class GetProductViaDapperRequest : IRequest<ProductDto>
 
 public class GetProductViaDapperRequestHandler : IRequestHandler<GetProductViaDapperRequest, ProductDto>
 {
-    private readonly IDapperRepository _repository;
+    private readonly IProductSearchService _prodctService;
     private readonly IStringLocalizer _t;
-
-    public GetProductViaDapperRequestHandler(IDapperRepository repository, IStringLocalizer<GetProductViaDapperRequestHandler> localizer) =>
-        (_repository, _t) = (repository, localizer);
+    public GetProductViaDapperRequestHandler(IStringLocalizer<GetProductViaDapperRequestHandler> localizer, IProductSearchService prodctService) =>
+         (_t, _prodctService) = (localizer, prodctService);
 
     public async Task<ProductDto> Handle(GetProductViaDapperRequest request, CancellationToken cancellationToken)
     {
-        var product = await _repository.QueryFirstOrDefaultAsync<Product>(
-            $"SELECT * FROM Catalog.\"Products\" WHERE \"Id\"  = '{request.Id}' AND \"TenantId\" = '@tenant'", cancellationToken: cancellationToken);
+        var product = await _prodctService.GetProductById(request.Id, cancellationToken);
+        _ = product ?? throw new NotFoundException(_t["product {0} Not Found.", request.Id]);
 
-        _ = product ?? throw new NotFoundException(_t["Product {0} Not Found.", request.Id]);
+        return product;
 
-        // Using mapster here throws a nullreference exception because of the "BrandName" property
-        // in ProductDto and the product not having a Brand assigned.
-        return new ProductDto
-        {
-            Id = product.Id,
-            BrandId = product.BrandId,
-            BrandName = string.Empty,
-            Description = product.Description,
-            ImagePath = product.ImagePath,
-            Name = product.Name,
-            Rate = product.Rate
-        };
     }
 }
