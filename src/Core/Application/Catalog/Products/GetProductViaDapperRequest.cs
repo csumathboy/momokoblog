@@ -14,9 +14,9 @@ public class GetProductViaDapperRequest : IRequest<ProductDto>
 
 public class GetProductViaDapperRequestHandler : IRequestHandler<GetProductViaDapperRequest, ProductDto>
 {
-    private readonly IProductSearchService _prodctService;
+    private readonly IProductDapperSearchService _prodctService;
     private readonly IStringLocalizer _t;
-    public GetProductViaDapperRequestHandler(IStringLocalizer<GetProductViaDapperRequestHandler> localizer, IProductSearchService prodctService) =>
+    public GetProductViaDapperRequestHandler(IStringLocalizer<GetProductViaDapperRequestHandler> localizer, IProductDapperSearchService prodctService) =>
          (_t, _prodctService) = (localizer, prodctService);
 
     public async Task<ProductDto> Handle(GetProductViaDapperRequest request, CancellationToken cancellationToken)

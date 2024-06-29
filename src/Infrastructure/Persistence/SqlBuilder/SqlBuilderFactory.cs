@@ -17,17 +17,16 @@ public class SqlBuilderFactory
     /// <param name="pagesize"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    /// <exception cref="InvalidOperationException"></exception>
-    public static string GetDataFromSqlBuilder(string sourceSql, int page, int pagesize, IDictionary<string, object> parameters)
+    public static string GetDataFromSqlBuilder(string sourceSql, int page, int pagesize)
     {
 
         string sql = _dbSettings.DBProvider.ToLowerInvariant() switch
         {
-            DbProviderKeys.Npgsql => new PostgreSqlDialect().GetPagingSql(sourceSql, page, pagesize, parameters, string.Empty),
-            DbProviderKeys.SqlServer => new SqlServerDialect().GetPagingSql(sourceSql, page, pagesize, parameters, string.Empty),
-            DbProviderKeys.MySql => new MySqlDialect().GetPagingSql(sourceSql, page, pagesize, parameters, string.Empty),
-            DbProviderKeys.Oracle => new OracleDialect().GetPagingSql(sourceSql, page, pagesize, parameters, string.Empty),
-            DbProviderKeys.SqLite => new SqliteDialect().GetPagingSql(sourceSql, page, pagesize, parameters, string.Empty),
+            DbProviderKeys.Npgsql => new PostgreSqlDialect().GetPagingSql(sourceSql, page, pagesize, string.Empty),
+            DbProviderKeys.SqlServer => new SqlServerDialect().GetPagingSql(sourceSql, page, pagesize, string.Empty),
+            DbProviderKeys.MySql => new MySqlDialect().GetPagingSql(sourceSql, page, pagesize, string.Empty),
+            DbProviderKeys.Oracle => new OracleDialect().GetPagingSql(sourceSql, page, pagesize, string.Empty),
+            DbProviderKeys.SqLite => new SqliteDialect().GetPagingSql(sourceSql, page, pagesize, string.Empty),
             _ => throw new InvalidOperationException("DB Provider is not supported."),
         };
         return sql;
@@ -38,7 +37,6 @@ public class SqlBuilderFactory
     /// </summary>
     /// <param name="sourceSql"></param>
     /// <returns></returns>
-    /// <exception cref="InvalidOperationException"></exception>
     public static string GetCountFromSqlBuilder(string sourceSql)
     {
 

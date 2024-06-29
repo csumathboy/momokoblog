@@ -1,33 +1,28 @@
-﻿using csumathboy.Application.Catalog.Products;
-using csumathboy.Application.Common.Interfaces;
-using Mapster;
-using System.Collections.Generic;
-
+﻿using csumathboy.Application.Catalog.Interfaces;
+using csumathboy.Application.Catalog.Products;
 namespace csumathboy.Application.Posts.Products;
 
-public class SearchProductViaDapperRequest : IRequest<List<ProductDto>>
+public class SearchProductViaDapperRequest : IRequest<PaginationResponse<ProductDto>>
 {
-    public string Name { get; set; }
+    public string? Name { get; set; }
+
+    public int PageNumber { get; set; }
+
+    public int PageSize { get; set; }
 
     public SearchProductViaDapperRequest(string name) => Name = name;
 }
 
-public class SearchProductViaDapperRequestHandler : IRequestHandler<SearchProductViaDapperRequest, List<ProductDto>>
+public class SearchProductViaDapperRequestHandler : IRequestHandler<SearchProductViaDapperRequest, PaginationResponse<ProductDto>>
 {
-    private readonly IDapperRepository _repository;
+    private readonly IProductDapperSearchService _prodctService;
     private readonly IStringLocalizer _t;
 
-    public SearchProductViaDapperRequestHandler(IDapperRepository repository, IStringLocalizer<GetProductViaDapperRequestHandler> localizer) =>
-        (_repository, _t) = (repository, localizer);
+    public SearchProductViaDapperRequestHandler(IProductDapperSearchService prodctService, IStringLocalizer<GetProductViaDapperRequestHandler> localizer) =>
+        (_prodctService, _t) = (prodctService, localizer);
 
-    public async Task<List<ProductDto>> Handle(SearchProductViaDapperRequest request, CancellationToken cancellationToken)
+    public async Task<PaginationResponse<ProductDto>> Handle(SearchProductViaDapperRequest request, CancellationToken cancellationToken)
     {
-        var productList = await _repository.QueryAsync<Product>(
-            $"SELECT * FROM Catalog.\"Products\" WHERE \"Name\"  like '%@Id%' AND \"TenantId\" = '@tenant'", new { Name= request.Name }, cancellationToken: cancellationToken);
-
-        _ = productList ?? throw new NotFoundException(_t["Products {0} Not Found.", request.Name]);
-
-        // Using mapster here throws a nullreference exception because of the "BrandName" property
-        return productList.Adapt<IReadOnlyList<ProductDto>>().ToList();
+        return await _prodctService.SearchProductByName(request.Name, request.PageNumber, request.PageSize, cancellationToken: cancellationToken);
     }
 }

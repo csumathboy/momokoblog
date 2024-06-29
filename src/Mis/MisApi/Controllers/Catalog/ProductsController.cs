@@ -1,4 +1,5 @@
 ﻿using csumathboy.Application.Catalog.Products;
+using csumathboy.Application.Posts.Products;
 
 namespace csumathboy.MisApi.Controllers.Catalog;
 
@@ -11,6 +12,15 @@ public class ProductsController : VersionedApiController
     {
         return Mediator.Send(request);
     }
+
+    [HttpPost("searchdapper")]
+    [MustHavePermission(FSHAction.Search, FSHResource.Products)]
+    [OpenApiOperation("Search products using dapper available filters.", "")]
+    public Task<PaginationResponse<ProductDto>> SearchDapperAsync(SearchProductViaDapperRequest request)
+    {
+        return Mediator.Send(request);
+    }
+
 
     [HttpGet("{id:guid}")]
     [MustHavePermission(FSHAction.View, FSHResource.Products)]

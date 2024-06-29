@@ -1,5 +1,7 @@
+using csumathboy.Application.Catalog.Interfaces;
 using csumathboy.Application.Common.Persistence;
 using csumathboy.Domain.Common.Contracts;
+using csumathboy.Infrastructure.Catalog;
 using csumathboy.Infrastructure.Common;
 using csumathboy.Infrastructure.Persistence.ConnectionString;
 using csumathboy.Infrastructure.Persistence.Context;
@@ -41,7 +43,7 @@ internal static class Startup
             .AddTransient<ApplicationDbSeeder>()
             .AddServices(typeof(ICustomSeeder), ServiceLifetime.Transient)
             .AddTransient<CustomSeederRunner>()
-
+            .AddScoped<IProductDapperSearchService, ProductDapperSearchService>()
             .AddTransient<IConnectionStringSecurer, ConnectionStringSecurer>()
             .AddTransient<IConnectionStringValidator, ConnectionStringValidator>()
 

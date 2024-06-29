@@ -13,25 +13,22 @@ public class SqliteDialect : SqlDialectBase
           return "SELECT LAST_INSERT_ROWID() AS [Id]";
       }
 
-      public override string GetPagingSql(string sql, int page, int resultsPerPage, IDictionary<string, object> parameters, string partitionBy)
+      public override string GetPagingSql(string sql, int page, int resultsPerPage, string partitionBy)
       {
-          return GetSetSql(sql, GetStartValue(page, resultsPerPage), resultsPerPage, parameters);
+          return GetSetSql(sql, GetStartValue(page, resultsPerPage), resultsPerPage);
       }
 
-      public override string GetSetSql(string sql, int firstResult, int maxResults, IDictionary<string, object> parameters)
+      public override string GetSetSql(string sql, int firstResult, int maxResults)
       {
           if (string.IsNullOrEmpty(sql))
               throw new ArgumentNullException(nameof(sql), $"{nameof(sql)} cannot be null.");
 
-          if (parameters == null)
-              throw new ArgumentNullException(nameof(parameters), $"{nameof(parameters)} cannot be null.");
-
+ 
           if (!IsSelectSql(sql))
               throw new ArgumentException($"{nameof(sql)} must be a SELECT statement.", nameof(sql));
 
-          var result = string.Format("{0} LIMIT @Offset, @Count", sql);
-          parameters.Add("@Offset", firstResult);
-          parameters.Add("@Count", maxResults);
+          string result = string.Format("{0} LIMIT {1}, {2}", sql, firstResult, maxResults);
+ 
           return result;
       }
 

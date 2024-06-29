@@ -18,8 +18,8 @@ public interface ISqlDialect
   string GetTableName(string schemaName, string tableName, string alias);
   string GetColumnName(string prefix, string columnName, string alias);
   string GetIdentitySql(string tableName);
-  string GetPagingSql(string sql, int page, int resultsPerPage, IDictionary<string, object> parameters, string partitionBy);
-  string GetSetSql(string sql, int firstResult, int maxResults, IDictionary<string, object> parameters);
+  string GetPagingSql(string sql, int page, int resultsPerPage, string partitionBy);
+  string GetSetSql(string sql, int firstResult, int maxResults);
   bool IsQuoted(string value);
   string QuoteString(string value);
   string GetDatabaseFunctionString(DatabaseFunction databaseFunction, string columnName, string functionParameters = "");
@@ -115,12 +115,12 @@ public abstract class SqlDialectBase : ISqlDialect
 
   protected virtual int GetStartValue(int page, int resultsPerPage)
   {
-    return (((page == 0 ? 1 : page) - 1) * resultsPerPage);
+    return ((page == 0 ? 1 : page) - 1) * resultsPerPage;
   }
 
   public abstract string GetIdentitySql(string tableName);
-  public abstract string GetPagingSql(string sql, int page, int resultsPerPage, IDictionary<string, object> parameters, string partitionBy);
-  public abstract string GetSetSql(string sql, int firstResult, int maxResults, IDictionary<string, object> parameters);
+  public abstract string GetPagingSql(string sql, int page, int resultsPerPage, string partitionBy);
+  public abstract string GetSetSql(string sql, int firstResult, int maxResults);
 
   public virtual bool IsQuoted(string value)
   {

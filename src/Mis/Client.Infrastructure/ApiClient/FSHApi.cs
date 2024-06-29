@@ -5141,6 +5141,21 @@ public partial interface IProductsClient : IApiService
     System.Threading.Tasks.Task<PaginationResponseOfProductDto> SearchAsync(SearchProductsRequest request, System.Threading.CancellationToken cancellationToken);
 
     /// <summary>
+    /// Search products using available filters.
+    /// </summary>
+    /// <exception cref="ApiException">A server side error occurred.</exception>
+    System.Threading.Tasks.Task<PaginationResponseOfProductDto> SearchAsyncDapper(SearchProductViaDapperRequest request);
+
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+    /// <summary>
+    /// Search products using available filters.
+    /// </summary>
+    /// <exception cref="ApiException">A server side error occurred.</exception>
+    System.Threading.Tasks.Task<PaginationResponseOfProductDto> SearchAsyncDapper(SearchProductViaDapperRequest request, System.Threading.CancellationToken cancellationToken);
+
+
+
+    /// <summary>
     /// Get product details.
     /// </summary>
     /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -5251,6 +5266,104 @@ public partial class ProductsClient : IProductsClient
     /// Search products using available filters.
     /// </summary>
     /// <exception cref="ApiException">A server side error occurred.</exception>
+    public virtual System.Threading.Tasks.Task<PaginationResponseOfProductDto> SearchAsyncDapper(SearchProductViaDapperRequest request)
+    {
+        return SearchAsyncDapper(request, System.Threading.CancellationToken.None);
+    }
+
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+    /// <summary>
+    /// Search products using available filters.
+    /// </summary>
+    /// <exception cref="ApiException">A server side error occurred.</exception>
+    public virtual async System.Threading.Tasks.Task<PaginationResponseOfProductDto> SearchAsyncDapper(SearchProductViaDapperRequest request, System.Threading.CancellationToken cancellationToken)
+    {
+        if (request == null)
+            throw new System.ArgumentNullException("request");
+
+        var urlBuilder_ = new System.Text.StringBuilder();
+        urlBuilder_.Append("api/v1/products/searchdapper");
+
+        var client_ = _httpClient;
+        var disposeClient_ = false;
+        try
+        {
+            using (var request_ = new System.Net.Http.HttpRequestMessage())
+            {
+                var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(request, _settings.Value));
+                content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                request_.Content = content_;
+                request_.Method = new System.Net.Http.HttpMethod("POST");
+                request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                PrepareRequest(client_, request_, urlBuilder_);
+
+                var url_ = urlBuilder_.ToString();
+                request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                PrepareRequest(client_, request_, url_);
+
+                var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                var disposeResponse_ = true;
+                try
+                {
+                    var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                    if (response_.Content != null && response_.Content.Headers != null)
+                    {
+                        foreach (var item_ in response_.Content.Headers)
+                            headers_[item_.Key] = item_.Value;
+                    }
+
+                    ProcessResponse(client_, response_);
+
+                    var status_ = (int)response_.StatusCode;
+                    if (status_ == 200)
+                    {
+                        var objectResponse_ = await ReadObjectResponseAsync<PaginationResponseOfProductDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                        if (objectResponse_.Object == null)
+                        {
+                            throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                        }
+                        return objectResponse_.Object;
+                    }
+                    else
+                    if (status_ == 400)
+                    {
+                        var objectResponse_ = await ReadObjectResponseAsync<HttpValidationProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                        if (objectResponse_.Object == null)
+                        {
+                            throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                        }
+                        throw new ApiException<HttpValidationProblemDetails>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                    }
+                    else
+                    {
+                        var objectResponse_ = await ReadObjectResponseAsync<ErrorResult>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                        if (objectResponse_.Object == null)
+                        {
+                            throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                        }
+                        throw new ApiException<ErrorResult>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                    }
+                }
+                finally
+                {
+                    if (disposeResponse_)
+                        response_.Dispose();
+                }
+            }
+        }
+        finally
+        {
+            if (disposeClient_)
+                client_.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// Search products using available filters.
+    /// </summary>
+    /// <exception cref="ApiException">A server side error occurred.</exception>
     public virtual System.Threading.Tasks.Task<PaginationResponseOfProductDto> SearchAsync(SearchProductsRequest request)
     {
         return SearchAsync(request, System.Threading.CancellationToken.None);
@@ -5344,6 +5457,7 @@ public partial class ProductsClient : IProductsClient
                 client_.Dispose();
         }
     }
+
 
     /// <summary>
     /// Get product details.
@@ -6674,6 +6788,22 @@ public partial class SearchProductsRequest : PaginationFilter
     public decimal? MaximumRate { get; set; } = default!;
 
 }
+
+
+[System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.15.10.0 (NJsonSchema v10.6.10.0 (Newtonsoft.Json v13.0.0.0))")]
+public partial class SearchProductViaDapperRequest : PaginationFilter
+{
+    [Newtonsoft.Json.JsonProperty("brandId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+    public System.Guid? BrandId { get; set; } = default!;
+
+    [Newtonsoft.Json.JsonProperty("minimumRate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+    public decimal? MinimumRate { get; set; } = default!;
+
+    [Newtonsoft.Json.JsonProperty("maximumRate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+    public decimal? MaximumRate { get; set; } = default!;
+
+}
+
 
 [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.15.10.0 (NJsonSchema v10.6.10.0 (Newtonsoft.Json v13.0.0.0))")]
 public partial class ProductDetailsDto

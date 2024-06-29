@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using csumathboy.Application.Catalog.Products;
 
 namespace csumathboy.Application.Catalog.Interfaces;
-public interface IProductSearchService
+public interface IProductDapperSearchService
 {
     public Task<ProductDto?> GetProductById(Guid Id, CancellationToken cancellationToken);
 
-    public Task<IReadOnlyList<ProductDto>?> SearchProductByName(string name, CancellationToken cancellationToken);
+    public Task<PaginationResponse<ProductDto>> SearchProductByName(string name, int pageNumber, int pageSize, CancellationToken cancellationToken);
 
 }

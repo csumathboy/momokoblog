@@ -22,7 +22,7 @@ public class OracleDialect : SqlDialectBase
         get { return false; }
     }
 
-    public override string GetPagingSql(string sql, int page, int resultsPerPage, IDictionary<string, object> parameters, string partitionBy)
+    public override string GetPagingSql(string sql, int page, int resultsPerPage, string partitionBy)
     {
         if (string.IsNullOrEmpty(partitionBy))
             throw new ArgumentNullException(nameof(partitionBy), $"{nameof(partitionBy)} cannot be null.");
@@ -64,10 +64,10 @@ public class OracleDialect : SqlDialectBase
             return result;
         }
 
-        return string.Format(GetSetSql(sql, toSkip, topLimit, parameters), partitionBy, partitionBy, partitionBy, sql, setCompare(partitionBy, "liner", "ss_dapper_1"));
+        return string.Format(GetSetSql(sql, toSkip, topLimit), partitionBy, partitionBy, partitionBy, sql, setCompare(partitionBy, "liner", "ss_dapper_1"));
     }
 
-    public override string GetSetSql(string sql, int firstResult, int maxResults, IDictionary<string, object> parameters)
+    public override string GetSetSql(string sql, int firstResult, int maxResults)
     {
         if (string.IsNullOrEmpty(sql))
             throw new ArgumentNullException(nameof(sql), $"{nameof(sql)} cannot be null.");
@@ -75,8 +75,6 @@ public class OracleDialect : SqlDialectBase
         if (string.IsNullOrWhiteSpace(sql))
             throw new ArgumentNullException(nameof(sql), $"{nameof(sql)} cannot be null.");
 
-        if (parameters == null)
-            throw new ArgumentNullException(nameof(parameters), $"{nameof(parameters)} cannot be null.");
 
         if (!IsSelectSql(sql))
             throw new ArgumentException($"{nameof(sql)} must be a SELECT statement.", nameof(sql));
@@ -91,11 +89,7 @@ public class OracleDialect : SqlDialectBase
         sb.AppendLine("inner join (select {0}, ROW_NUMBER() OVER (ORDER BY {1} ASC) LINE_NUMBER from (");
         sb.AppendLine("select distinct {2} from ({3}))) liner on {4}");
         sb.AppendLine(") ss_dapper_2 ");
-        sb.AppendLine("WHERE ss_dapper_2.line_number > :toSkip AND ss_dapper_2.line_number <= :topLimit");
-
-        parameters.Add(":topLimit", maxResults);
-        parameters.Add(":toSkip", firstResult);
-
+        sb.AppendLine("WHERE ss_dapper_2.line_number > :" + firstResult + " AND ss_dapper_2.line_number <= :" + maxResults);
         return sb.ToString();
     }
 

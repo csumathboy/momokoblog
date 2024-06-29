@@ -12,12 +12,12 @@ public class PostgreSqlDialect : SqlDialectBase
     return "SELECT LASTVAL() AS Id";
   }
 
-  public override string GetPagingSql(string sql, int page, int resultsPerPage, IDictionary<string, object> parameters, string partitionBy)
+  public override string GetPagingSql(string sql, int page, int resultsPerPage, string partitionBy)
   {
-    return GetSetSql(sql, GetStartValue(page, resultsPerPage), resultsPerPage, parameters);
+    return GetSetSql(sql, GetStartValue(page, resultsPerPage), resultsPerPage);
   }
 
-  public override string GetSetSql(string sql, int firstResult, int maxResults, IDictionary<string, object> parameters)
+  public override string GetSetSql(string sql, int firstResult, int maxResults)
   {
     if (string.IsNullOrEmpty(sql))
       throw new ArgumentNullException(nameof(sql), $"{nameof(sql)} cannot be null.");
