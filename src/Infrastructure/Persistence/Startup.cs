@@ -7,6 +7,7 @@ using csumathboy.Infrastructure.Persistence.ConnectionString;
 using csumathboy.Infrastructure.Persistence.Context;
 using csumathboy.Infrastructure.Persistence.Initialization;
 using csumathboy.Infrastructure.Persistence.Repository;
+using csumathboy.Infrastructure.Persistence.SqlBuilder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,7 +47,7 @@ internal static class Startup
             .AddScoped<IProductDapperSearchService, ProductDapperSearchService>()
             .AddTransient<IConnectionStringSecurer, ConnectionStringSecurer>()
             .AddTransient<IConnectionStringValidator, ConnectionStringValidator>()
-
+             .AddTransient<ISqlBuilderService, SqlBuilderService>()
             .AddRepositories();
     }
 

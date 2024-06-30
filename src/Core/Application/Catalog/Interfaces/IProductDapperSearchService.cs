@@ -10,6 +10,6 @@ public interface IProductDapperSearchService
 {
     public Task<ProductDto?> GetProductById(Guid Id, CancellationToken cancellationToken);
 
-    public Task<PaginationResponse<ProductDto>> SearchProductByName(string name, int pageNumber, int pageSize, CancellationToken cancellationToken);
+    public Task<PaginationResponse<ProductDto>> SearchProductByName(string? name, int pageNumber, int pageSize, CancellationToken cancellationToken);
 
 }

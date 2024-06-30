@@ -13,4 +13,20 @@ public class Tag : AuditableEntity, IAggregateRoot
         NickName = nickName;
         ArtCount = 0;
     }
+
+    public void UpdateName(string newName)
+    {
+        Name = Guard.Against.NullOrEmpty(newName, nameof(newName));
+    }
+
+    public void UpdateNickName(string newNickName)
+    {
+        NickName = Guard.Against.NullOrEmpty(newNickName, nameof(newNickName));
+    }
+
+    public void UpdateArtCount(int newArtCount)
+    {
+        ArtCount = Guard.Against.NegativeOrZero(newArtCount, nameof(newArtCount));
+    }
+
 }

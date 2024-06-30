@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using System.Xml.Linq;
 
 namespace csumathboy.Domain.PostsAggregate;
 public class Comment : AuditableEntity, IAggregateRoot
@@ -18,4 +19,36 @@ public class Comment : AuditableEntity, IAggregateRoot
         Email = Guard.Against.NullOrEmpty(email, nameof(email));
         PhoneNumber = Guard.Against.NullOrEmpty(phoneNumber, nameof(phoneNumber));
     }
+
+    public void UpdateTitle(string newTitle)
+    {
+        Title = Guard.Against.NullOrEmpty(newTitle, nameof(newTitle));
+    }
+
+    public void UpdateRealName(string newRealName)
+    {
+        RealName = Guard.Against.NullOrEmpty(newRealName, nameof(newRealName));
+    }
+
+    public void UpdatePostsId(Guid newPostsId)
+    {
+        PostsId = Guard.Against.NullOrEmpty(newPostsId, nameof(newPostsId));
+    }
+
+    public void UpdateDescription(string newDescription)
+    {
+        Description = Guard.Against.NullOrEmpty(newDescription, nameof(newDescription));
+    }
+
+    public void UpdateEmail(string newEmail)
+    {
+        Email = Guard.Against.NullOrEmpty(newEmail, nameof(newEmail));
+    }
+
+    public void UpdatePhoneNumber(string newPhoneNumber)
+    {
+        PhoneNumber = Guard.Against.NullOrEmpty(newPhoneNumber, nameof(newPhoneNumber));
+    }
+
+
 }

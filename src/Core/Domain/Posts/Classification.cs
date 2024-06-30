@@ -15,6 +15,7 @@ public class Classification : AuditableEntity, IAggregateRoot
         Description = description;
         ArtCount = 0;
     }
+
     public void UpdateName(string newName)
     {
         Name = Guard.Against.NullOrEmpty(newName, nameof(newName));

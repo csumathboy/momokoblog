@@ -1,12 +1,13 @@
 ﻿using csumathboy.Infrastructure.Common;
+using Microsoft.Extensions.Options;
 
 namespace csumathboy.Infrastructure.Persistence.SqlBuilder;
-public class SqlBuilderFactory
+public class SqlBuilderService : ISqlBuilderService
 {
     private static DatabaseSettings? _dbSettings;
-    public SqlBuilderFactory(DatabaseSettings dbSettings)
+    public SqlBuilderService(IOptions<DatabaseSettings> dbSettings)
     {
-        _dbSettings = dbSettings;
+        _dbSettings = dbSettings.Value;
     }
 
     /// <summary>
@@ -17,7 +18,7 @@ public class SqlBuilderFactory
     /// <param name="pagesize"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    public static string GetDataFromSqlBuilder(string sourceSql, int page, int pagesize)
+    public string GetDataFromSqlBuilder(string sourceSql, int page, int pagesize)
     {
 
         string sql = _dbSettings.DBProvider.ToLowerInvariant() switch
@@ -37,7 +38,7 @@ public class SqlBuilderFactory
     /// </summary>
     /// <param name="sourceSql"></param>
     /// <returns></returns>
-    public static string GetCountFromSqlBuilder(string sourceSql)
+    public string GetCountFromSqlBuilder(string sourceSql)
     {
 
         string sql = _dbSettings.DBProvider.ToLowerInvariant() switch

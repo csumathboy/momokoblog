@@ -22,4 +22,9 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Posts\Comments\" />
+      <Folder Include="Posts\Tags\" />
+      <Folder Include="Posts\Posts\" />
+    </ItemGroup>
 </Project>
