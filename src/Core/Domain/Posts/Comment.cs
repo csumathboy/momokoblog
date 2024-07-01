@@ -10,7 +10,7 @@ public class Comment : AuditableEntity, IAggregateRoot
     public string RealName { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
-    public Comment(string title, Guid postsId, string description, string realName, string email, string phoneNumber)
+    public Comment(string title, Guid postsId, string? description, string realName, string email, string phoneNumber)
     {
         Title = Guard.Against.NullOrEmpty(title, nameof(title));
         PostsId = Guard.Against.NullOrEmpty(postsId, nameof(postsId));
@@ -29,12 +29,7 @@ public class Comment : AuditableEntity, IAggregateRoot
     {
         RealName = Guard.Against.NullOrEmpty(newRealName, nameof(newRealName));
     }
-
-    public void UpdatePostsId(Guid newPostsId)
-    {
-        PostsId = Guard.Against.NullOrEmpty(newPostsId, nameof(newPostsId));
-    }
-
+ 
     public void UpdateDescription(string newDescription)
     {
         Description = Guard.Against.NullOrEmpty(newDescription, nameof(newDescription));

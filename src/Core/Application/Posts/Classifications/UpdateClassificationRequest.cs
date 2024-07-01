@@ -60,7 +60,7 @@ public class UpdateClassificationRequestHandler : IRequestHandler<UpdateClassifi
 
 public class UpdateClassificationRequestValidator : CustomValidator<UpdateClassificationRequest>
 {
-    public UpdateClassificationRequestValidator(IReadRepository<Classification> ClassificationRepo, IReadRepository<Brand> brandRepo, IStringLocalizer<UpdateClassificationRequestValidator> T)
+    public UpdateClassificationRequestValidator(IReadRepository<Classification> ClassificationRepo, IStringLocalizer<UpdateClassificationRequestValidator> T)
     {
         RuleFor(p => p.Name)
             .NotEmpty()

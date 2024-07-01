@@ -1,4 +1,5 @@
 ﻿using csumathboy.Application.Catalog.Products;
+using csumathboy.Application.Posts.Classifications;
 
 namespace csumathboy.Web.Controllers.Catalog;
 
