@@ -7,15 +7,48 @@
     <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">@L["Home"]</MudNavLink>
     <MudNavLink Href="https://fullstackhero.net/basics/getting-started/" Match="NavLinkMatch.All" Target="_blank"
         Icon="@Icons.Material.Filled.RocketLaunch">@L["Getting Started"]</MudNavLink>
+
+    @if (_canViewDashboard)
+    {
+        <MudNavLink Href="/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Filled.Dashboard">@L["Dashboard"]</MudNavLink>
+    }
+    @if (_canViewProducts || _canViewBrands)
+    {
+        <MudText Typo="Typo.subtitle2" Color="Color.Primary" Class="ml-4 my-3">@L["Posts"]</MudText>
+        <MudNavGroup Title="@L["Posts"]" Expanded Icon="@Icons.Filled.AddBox">
+            @if (_canViewProducts)
+            {
+                <MudNavLink Href="/posts/post" Icon="@Icons.Filled.ShoppingBag" Class="fsh-nav-child">
+                    @L["Post"]
+                </MudNavLink>
+            }
+            @if (_canViewProducts)
+            {
+                <MudNavLink Href="/posts/classification" Icon="@Icons.Filled.ShoppingBag" Class="fsh-nav-child">
+                    @L["Classification"]
+                </MudNavLink>
+            }
+            @if (_canViewProducts)
+            {
+                <MudNavLink Href="/posts/tag" Icon="@Icons.Filled.ShoppingBag" Class="fsh-nav-child">
+                    @L["Tag"]
+                </MudNavLink>
+            }
+           @if (_canViewProducts)
+            {
+                <MudNavLink Href="/posts/comment" Icon="@Icons.Filled.ShoppingBag" Class="fsh-nav-child">
+                    @L["Comment"]
+                </MudNavLink>
+            }
+        </MudNavGroup>
+    }
+
     @if (_canViewHangfire)
     {
         <MudNavLink Href="@_hangfireUrl" Match="NavLinkMatch.All" Target="_blank" Icon="@Icons.Material.Filled.Work">@L["Hangfire"]</MudNavLink>
     }
     <MudText Typo="Typo.subtitle2" Color="Color.Primary" Class="ml-4 my-3">@L["Personal"]</MudText>
-    @if (_canViewDashboard)
-    {
-        <MudNavLink Href="/dashboard" Match="NavLinkMatch.All" Icon="@Icons.Filled.Dashboard">@L["Dashboard"]</MudNavLink>
-    }
+
     <MudNavLink Href="/account" Icon="@Icons.Filled.ManageAccounts">@L["Account"]</MudNavLink>
     <MudNavLink Href="/audit-logs" Icon="@Icons.Material.Filled.SecurityUpdateGood">@L["Logs"]</MudNavLink>
     @if (_canViewProducts || _canViewBrands)
@@ -34,6 +67,7 @@
                     @L["Brands"]
                 </MudNavLink>
             }
+              
         </MudNavGroup>
     }
     @if (CanViewAdministrationGroup)

@@ -26,6 +26,10 @@ public static class FSHResource
     public const string RoleClaims = nameof(RoleClaims);
     public const string Products = nameof(Products);
     public const string Brands = nameof(Brands);
+    public const string Post = nameof(Post);
+    public const string Classification = nameof(Classification);
+    public const string Tag = nameof(Tag);
+    public const string Comment = nameof(Comment);
 }
 
 public static class FSHPermissions
@@ -60,7 +64,27 @@ public static class FSHPermissions
         new("Update Brands", FSHAction.Update, FSHResource.Brands),
         new("Delete Brands", FSHAction.Delete, FSHResource.Brands),
         new("Generate Brands", FSHAction.Generate, FSHResource.Brands),
-        new("Clean Brands", FSHAction.Clean, FSHResource.Brands),
+        new("Clean Post", FSHAction.Clean, FSHResource.Brands),
+        new("View Post", FSHAction.View, FSHResource.Post, IsBasic: true),
+        new("Search Post", FSHAction.Search, FSHResource.Post, IsBasic: true),
+        new("Create Post", FSHAction.Create, FSHResource.Post),
+        new("Update Post", FSHAction.Update, FSHResource.Post),
+        new("Delete Post", FSHAction.Delete, FSHResource.Post),
+        new("View Classification", FSHAction.View, FSHResource.Classification, IsBasic: true),
+        new("Search Classification", FSHAction.Search, FSHResource.Classification, IsBasic: true),
+        new("Create Classification", FSHAction.Create, FSHResource.Classification),
+        new("Update Classification", FSHAction.Update, FSHResource.Classification),
+        new("Delete Classification", FSHAction.Delete, FSHResource.Classification),
+        new("View Tag", FSHAction.View, FSHResource.Tag, IsBasic: true),
+        new("Search Tag", FSHAction.Search, FSHResource.Tag, IsBasic: true),
+        new("Create Tag", FSHAction.Create, FSHResource.Tag),
+        new("Update Tag", FSHAction.Update, FSHResource.Tag),
+        new("Delete Tag", FSHAction.Delete, FSHResource.Tag),
+        new("View Comment", FSHAction.View, FSHResource.Comment, IsBasic: true),
+        new("Search Comment", FSHAction.Search, FSHResource.Comment, IsBasic: true),
+        new("Create Comment", FSHAction.Create, FSHResource.Comment),
+        new("Update Comment", FSHAction.Update, FSHResource.Comment),
+        new("Delete Comment", FSHAction.Delete, FSHResource.Comment),
         new("View Tenants", FSHAction.View, FSHResource.Tenants, IsRoot: true),
         new("Create Tenants", FSHAction.Create, FSHResource.Tenants, IsRoot: true),
         new("Update Tenants", FSHAction.Update, FSHResource.Tenants, IsRoot: true),

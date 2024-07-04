@@ -117,25 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Blazor WASM Boilerplate" xml:space="preserve">
-    <value>Blazor WASM Boilerplate</value>
+  <data name="chat" xml:space="preserve">
+    <value>chat</value>
   </data>
-  <data name="Built with the goodness of" xml:space="preserve">
-    <value>Built with the goodness of</value>
+  <data name="contacts" xml:space="preserve">
+    <value>contacts</value>
   </data>
-  <data name="Compatible with" xml:space="preserve">
-    <value>Compatible with</value>
+  <data name="detailed guide for more." xml:space="preserve">
+    <value>detailed guide for more.</value>
   </data>
-  <data name="Component Library" xml:space="preserve">
-    <value>Component Library</value>
+  <data name="Enter your message..." xml:space="preserve">
+    <value>Enter your message...</value>
   </data>
-  <data name="In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference." xml:space="preserve">
-    <value>In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference.</value>
+  <data name="Logged In." xml:space="preserve">
+    <value>Logged In.</value>
   </data>
-  <data name="Read The Guide" xml:space="preserve">
-    <value>阅读使用指南</value>
+  <data name="Logged Out." xml:space="preserve">
+    <value>Logged Out.</value>
   </data>
-  <data name="Version 1.0" xml:space="preserve">
-    <value>Version 1.0</value>
+  <data name="New Message From {0}" xml:space="preserve">
+    <value>New Message From {0}</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Want to understand how Chat is implemented in BlazorHero ? Refer this" xml:space="preserve">
+    <value>Want to understand how Chat is implemented in BlazorHero ? Refer this</value>
   </data>
 </root>

@@ -117,25 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Blazor WASM Boilerplate" xml:space="preserve">
-    <value>Blazor WASM Boilerplate</value>
+  <data name="Account" xml:space="preserve">
+    <value>账号管理</value>
   </data>
-  <data name="Built with the goodness of" xml:space="preserve">
-    <value>Built with the goodness of</value>
+  <data name="Administrator" xml:space="preserve">
+    <value>管理员</value>
   </data>
-  <data name="Compatible with" xml:space="preserve">
-    <value>Compatible with</value>
+  <data name="Brands" xml:space="preserve">
+    <value>品牌管理</value>
   </data>
-  <data name="Component Library" xml:space="preserve">
-    <value>Component Library</value>
+  <data name="Catalog" xml:space="preserve">
+    <value>资源管理</value>
   </data>
-  <data name="In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference." xml:space="preserve">
-    <value>In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference.</value>
+  <data name="Chat" xml:space="preserve">
+    <value>聊天</value>
   </data>
-  <data name="Read The Guide" xml:space="preserve">
-    <value>阅读使用指南</value>
+  <data name="Classification" xml:space="preserve">
+    <value>分类管理</value>
   </data>
-  <data name="Version 1.0" xml:space="preserve">
-    <value>Version 1.0</value>
+  <data name="Comment" xml:space="preserve">
+    <value>评论管理</value>
+  </data>
+  <data name="Communication" xml:space="preserve">
+    <value>交流沟通</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>仪表盘</value>
+  </data>
+  <data name="Document Management" xml:space="preserve">
+    <value>文档管理</value>
+  </data>
+  <data name="Document Store" xml:space="preserve">
+    <value>文档列表</value>
+  </data>
+  <data name="Document Types" xml:space="preserve">
+    <value>文档类型</value>
+  </data>
+  <data name="FAQs" xml:space="preserve">
+    <value>反馈问题</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>特点</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="Logs" xml:space="preserve">
+    <value>日志</value>
+  </data>
+  <data name="Mail" xml:space="preserve">
+    <value>电子邮件</value>
+  </data>
+  <data name="Personal" xml:space="preserve">
+    <value>个人中心</value>
+  </data>
+  <data name="Post" xml:space="preserve">
+    <value>文章管理</value>
+  </data>
+  <data name="Posts" xml:space="preserve">
+    <value>博客管理</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>产品管理</value>
+  </data>
+  <data name="Quick Start Guide" xml:space="preserve">
+    <value>快速开始</value>
+  </data>
+  <data name="Resources" xml:space="preserve">
+    <value>资源</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>角色管理</value>
+  </data>
+  <data name="Swagger" xml:space="preserve">
+    <value>Swagger</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>标签管理</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>用户管理</value>
   </data>
 </root>

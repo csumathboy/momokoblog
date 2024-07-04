@@ -23,4 +23,6 @@ public class PostDto : IDto
     public bool IsTop { get; set; } = false;
 
     public PostStatus PostsStatus { get; set; } = default!;
+
+    public ICollection<Tag> Tags { get;  set; } = default!;
 }

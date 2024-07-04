@@ -132,6 +132,12 @@
   <data name="Chat" xml:space="preserve">
     <value>Chat</value>
   </data>
+  <data name="Classification" xml:space="preserve">
+    <value>Classification</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
   <data name="Communication" xml:space="preserve">
     <value>Communication</value>
   </data>
@@ -165,6 +171,12 @@
   <data name="Personal" xml:space="preserve">
     <value>Personal</value>
   </data>
+  <data name="Post" xml:space="preserve">
+    <value>Article</value>
+  </data>
+  <data name="Posts" xml:space="preserve">
+    <value>Posts</value>
+  </data>
   <data name="Products" xml:space="preserve">
     <value>Products</value>
   </data>
@@ -179,6 +191,9 @@
   </data>
   <data name="Swagger" xml:space="preserve">
     <value>Swagger</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>Tag</value>
   </data>
   <data name="Users" xml:space="preserve">
     <value>Users</value>

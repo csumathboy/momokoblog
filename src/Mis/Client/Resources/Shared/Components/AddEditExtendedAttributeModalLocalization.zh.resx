@@ -117,25 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Blazor WASM Boilerplate" xml:space="preserve">
-    <value>Blazor WASM Boilerplate</value>
+  <data name="Add Extended Attribute" xml:space="preserve">
+    <value>Add Extended Attribute</value>
   </data>
-  <data name="Built with the goodness of" xml:space="preserve">
-    <value>Built with the goodness of</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="Compatible with" xml:space="preserve">
-    <value>Compatible with</value>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
   </data>
-  <data name="Component Library" xml:space="preserve">
-    <value>Component Library</value>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
   </data>
-  <data name="In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference." xml:space="preserve">
-    <value>In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference.</value>
+  <data name="Decimal" xml:space="preserve">
+    <value>Decimal</value>
   </data>
-  <data name="Read The Guide" xml:space="preserve">
-    <value>阅读使用指南</value>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="Version 1.0" xml:space="preserve">
-    <value>Version 1.0</value>
+  <data name="Entity Id" xml:space="preserve">
+    <value>Entity Id</value>
+  </data>
+  <data name="External Id" xml:space="preserve">
+    <value>External Id</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Is Active" xml:space="preserve">
+    <value>Is Active</value>
+  </data>
+  <data name="Json" xml:space="preserve">
+    <value>Json</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Update Extended Attribute" xml:space="preserve">
+    <value>Update Extended Attribute</value>
   </data>
 </root>

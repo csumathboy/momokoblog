@@ -117,25 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Blazor WASM Boilerplate" xml:space="preserve">
-    <value>Blazor WASM Boilerplate</value>
+  <data name="Description" xml:space="preserve">
+    <value>Login with your Credentials.</value>
   </data>
-  <data name="Built with the goodness of" xml:space="preserve">
-    <value>Built with the goodness of</value>
+  <data name="Don't have an account?" xml:space="preserve">
+    <value>Don't have an account?</value>
   </data>
-  <data name="Compatible with" xml:space="preserve">
-    <value>Compatible with</value>
+  <data name="E-mail" xml:space="preserve">
+    <value>E-mail</value>
   </data>
-  <data name="Component Library" xml:space="preserve">
-    <value>Component Library</value>
+  <data name="Email is required!" xml:space="preserve">
+    <value>Email is required!</value>
   </data>
-  <data name="In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference." xml:space="preserve">
-    <value>In case you are stuck anywhere or have any queries regarding this implementation, I have compiled a Quick Start Guide for you reference.</value>
+  <data name="Enter your credentials to get started." xml:space="preserve">
+    <value>Enter your credentials to get started.</value>
   </data>
-  <data name="Read The Guide" xml:space="preserve">
-    <value>阅读使用指南</value>
+  <data name="Fill Administrator Credentials" xml:space="preserve">
+    <value>Fill Administrator Credentials</value>
   </data>
-  <data name="Version 1.0" xml:space="preserve">
-    <value>Version 1.0</value>
+  <data name="Fill Basic User Credentials" xml:space="preserve">
+    <value>Fill Basic User Credentials</value>
+  </data>
+  <data name="Forgot password?" xml:space="preserve">
+    <value>Forgot password?</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Password is required!" xml:space="preserve">
+    <value>Password is required!</value>
+  </data>
+  <data name="Register here" xml:space="preserve">
+    <value>Register here</value>
+  </data>
+  <data name="Remember me?" xml:space="preserve">
+    <value>Remember me?</value>
+  </data>
+  <data name="Sign In" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Sign In</value>
   </data>
 </root>

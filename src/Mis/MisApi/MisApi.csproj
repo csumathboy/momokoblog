@@ -32,6 +32,8 @@
         </None>
     </ItemGroup>
     <ItemGroup>
+        <Compile Remove="Localization\en - Copy %282%29\**" />
+        <Content Remove="Localization\en - Copy %282%29\**" />
         <Content Remove="Logs\*" />
         <None Include="Logs\*" />
     </ItemGroup>
@@ -39,6 +41,10 @@
         <None Include="Email Templates\*.cshtml">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Remove="Localization\en - Copy %282%29\**" />
+      <None Remove="Localization\en - Copy %282%29\**" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Databases\Host\" />
