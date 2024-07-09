@@ -33,6 +33,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Pages\Posts\" />
+      <None Include="Pages\Posts\Posts.razor.cs" />
     </ItemGroup>
 </Project>

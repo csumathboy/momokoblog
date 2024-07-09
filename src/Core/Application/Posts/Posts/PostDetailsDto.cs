@@ -5,6 +5,8 @@ namespace csumathboy.Application.Posts.Posts;
 
 public class PostDetailsDto : IDto
 {
+    public Guid Id { get; set; }
+
     public string Title { get; private set; } = default!;
 
     public string Author { get; set; } = default!;

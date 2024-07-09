@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using csumathboy.Domain.Catalog;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 namespace csumathboy.Domain.PostsAggregate;
@@ -40,6 +41,11 @@ public class Post : AuditableEntity, IAggregateRoot
         Tags = new Collection<Tag>();
     }
 
+    public Post ClearImagePath()
+    {
+        Picture = string.Empty;
+        return this;
+    }
     public void AddTags(Tag newTags)
     {
         Guard.Against.Null(newTags, nameof(newTags));

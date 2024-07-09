@@ -1,4 +1,5 @@
 using csumathboy.Application.Posts.Posts.Specifications;
+using csumathboy.Domain.Catalog;
 using csumathboy.Domain.Common.Events;
 using csumathboy.Domain.PostsAggregate;
 
@@ -18,13 +19,14 @@ public class UpdatePostRequest : IRequest<Guid>
 
     public string ContextValue { get; set; } = default!;
 
-    public string Picture { get; set; } = string.Empty;
-
     public int Sort { get; set; } = 0;
 
     public bool IsTop { get; set; } = false;
 
     public PostStatus PostsStatus { get; set; } = default!;
+
+    public bool DeleteCurrentImage { get; set; } = false;
+    public FileUploadRequest? Image { get; set; }
 
 }
 
@@ -32,15 +34,34 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
 {
     private readonly IRepository<Post> _repository;
     private readonly IStringLocalizer _t;
+    private readonly IFileStorageService _file;
 
-    public UpdatePostRequestHandler(IRepository<Post> repository, IStringLocalizer<UpdatePostRequestHandler> localizer) =>
-        (_repository, _t) = (repository, localizer);
+    public UpdatePostRequestHandler(IRepository<Post> repository, IStringLocalizer<UpdatePostRequestHandler> localizer, IFileStorageService file) =>
+        (_repository, _t,_file) = (repository, localizer,file);
 
     public async Task<Guid> Handle(UpdatePostRequest request, CancellationToken cancellationToken)
     {
         var post = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
         _ = post ?? throw new NotFoundException(_t["Post {0} Not Found.", request.Id]);
+
+        // Remove old image if flag is set
+        if (request.DeleteCurrentImage)
+        {
+            string? currentProductImagePath = post.Picture;
+            if (!string.IsNullOrEmpty(currentProductImagePath))
+            {
+                string root = Directory.GetCurrentDirectory();
+                _file.Remove(Path.Combine(root, currentProductImagePath));
+            }
+
+            post = post.ClearImagePath();
+        }
+
+        string? productImagePath = request.Image is not null
+            ? await _file.UploadAsync<Post>(request.Image, FileType.Image, cancellationToken)
+            : null;
+
 
         if (!string.IsNullOrEmpty(request.Title))
         {
@@ -72,9 +93,9 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
             post.UpdateClassification(request.ClassId);
         }
 
-        if (string.IsNullOrEmpty(request.Picture))
+        if (!string.IsNullOrEmpty(productImagePath))
         {
-            post.UpdatePicture(request.Picture);
+            post.UpdatePicture(productImagePath);
         }
 
         // Add Domain Events to be raised after the commit

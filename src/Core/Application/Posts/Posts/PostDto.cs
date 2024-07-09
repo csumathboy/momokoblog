@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 namespace csumathboy.Application.Posts.Posts;
 public class PostDto : IDto
 {
+    public Guid Id { get; set; }
+
     public string Title { get; private set; } = default!;
 
     public string Author { get; set; } = default!;

@@ -2,7 +2,6 @@
 using csumathboy.Domain.Common.Events;
 using csumathboy.Domain.PostsAggregate;
 
-
 namespace csumathboy.Application.Posts.Posts;
 
 public class CreatePostRequest : IRequest<Guid>
@@ -17,24 +16,26 @@ public class CreatePostRequest : IRequest<Guid>
 
     public string ContextValue { get; set; } = default!;
 
-    public string Picture { get; set; } = string.Empty;
-
     public int Sort { get; set; } = 0;
 
     public bool IsTop { get; set; } = false;
 
     public PostStatus PostsStatus { get; set; } = default!;
+
+    public FileUploadRequest? Image { get; set; }
 }
 
 public class CreatePostRequestHandler : IRequestHandler<CreatePostRequest, Guid>
 {
     private readonly IRepository<Post> _repository;
-    public CreatePostRequestHandler(IRepository<Post> repository) => _repository = repository;
+    private readonly IFileStorageService _file;
+    public CreatePostRequestHandler(IRepository<Post> repository, IFileStorageService file) => (_repository, _file) = (repository, file);
 
     public async Task<Guid> Handle(CreatePostRequest request, CancellationToken cancellationToken)
     {
+        string postImagePath = await _file.UploadAsync<Post>(request.Image, FileType.Image, cancellationToken);
 
-        var post = new Post(request.Title, request.ClassId, request.Author, request.Description, request.ContextValue, request.Picture, request.Sort, request.IsTop, request.PostsStatus);
+        var post = new Post(request.Title, request.ClassId, request.Author, request.Description, request.ContextValue, postImagePath, request.Sort, request.IsTop, request.PostsStatus);
 
         // Add Domain Events to be raised after the commit
         post.DomainEvents.Add(EntityCreatedEvent.WithEntity(post));
