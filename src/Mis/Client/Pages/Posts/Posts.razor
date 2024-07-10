@@ -1,31 +1,40 @@
 ﻿@page "/posts/post"
-@attribute [MustHavePermission(FSHAction.View, FSHResource.Posts)]
+@attribute [MustHavePermission(FSHAction.View, FSHResource.Post)]
 
 @inject IStringLocalizer<Posts> L
 
 <FshTitle Title="@L["Posts"]" Description="@L["Manage Posts."]" />
 
-<EntityTable @ref="_table" TEntity="ProductDto" TId="Guid" TRequest="ProductViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="PostDto" TId="Guid" TRequest="PostViewModel" Context="@Context">
 
     <AdvancedSearchContent>
-        <BrandAutocomplete @bind-Value="SearchBrandId" />
-        <MudSlider T="decimal" @bind-value="SearchMinimumRate">@L["Minimum Rate"]: @_searchMinimumRate.ToString()</MudSlider>
-        <MudSlider T="decimal" @bind-value="SearchMaximumRate">@L["Maximum Rate"]: @_searchMaximumRate.ToString()</MudSlider>
+        <ClassAutoComplete @bind-Value="SearchClassId" />
+        <MudSlider T="decimal" @bind-value="SearchMinimumSort">@L["Minimum Sort"]: @_searchMinimumSort.ToString()</MudSlider>
+        <MudSlider T="decimal" @bind-value="SearchMaximumSort">@L["Maximum Sort"]: @_searchMaximumSort.ToString()</MudSlider>
     </AdvancedSearchContent>
 
     <EditFormContent>
         <MudItem xs="12" md="6">
-            <MudTextField Label="@L["Name"]" For="@(() => context.Name)" @bind-Value="context.Name" />
+            <MudTextField Label="@L["Title"]" For="@(() => context.Title)" @bind-Value="context.Title" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField Label="@L["Description"]" For="@(() => context.Description)"
-                @bind-Value="context.Description" />
+            <MudTextField Label="@L["Author"]" For="@(() => context.Author)"
+                @bind-Value="context.Author" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <BrandAutocomplete For="@(() => context.BrandId)" @bind-Value="context.BrandId" OffsetY="true" />
+            <ClassAutoComplete For="@(() => context.ClassId)" @bind-Value="context.ClassId" OffsetY="true" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField Label="@L["Rate"]" For="@(() => context.Rate)" @bind-Value="context.Rate" />
+            <MudTextField Label="@L["Sort"]" For="@(() => context.Sort)" @bind-Value="context.Sort" />
+        </MudItem>
+         <MudItem xs="12" md="6">
+             <MudCheckBox  Label="@L["Sort"]" For="@(() => context.Sort)" @bind-Value="context.IsTop"></MudCheckBox>
+        </MudItem>
+         <MudItem xs="12" md="6">
+            <MudTextField Label="@L["Sort"]" For="@(() => context.Sort)" @bind-Value="context.Sort" />
+        </MudItem>
+          <MudItem xs="12" md="12">
+            <MudTextField Label="@L["Description"]" For="@(() => context.Description)" @bind-Value="context.Description" />
         </MudItem>
         <MudItem xs="12" md="12">
             <MudItem>

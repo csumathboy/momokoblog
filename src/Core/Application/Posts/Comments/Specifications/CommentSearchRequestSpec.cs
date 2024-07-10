@@ -7,6 +7,5 @@ public class CommentSearchRequestSpec : EntitiesByPaginationFilterSpec<Comment, 
     public CommentSearchRequestSpec(SearchCommentRequest request)
         : base(request) =>
         Query
-            .OrderBy(c => c.Title, !request.HasOrderBy())
-            .Where(p => p.Title.Equals(request.Title));
+            .OrderBy(c => c.Title, !request.HasOrderBy());
 }

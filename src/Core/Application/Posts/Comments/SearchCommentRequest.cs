@@ -6,8 +6,6 @@ namespace csumathboy.Application.Posts.Comments;
 
 public class SearchCommentRequest : PaginationFilter, IRequest<PaginationResponse<CommentDto>>
 {
-    public string? Title { get; set; }
-
 }
 
 public class SearchCommentRequestHandler : IRequestHandler<SearchCommentRequest, PaginationResponse<CommentDto>>

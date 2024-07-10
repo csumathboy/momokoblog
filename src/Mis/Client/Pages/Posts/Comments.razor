@@ -1,0 +1,31 @@
+﻿@page "/posts/comment"
+@attribute [MustHavePermission(FSHAction.View, FSHResource.Comment)]
+
+@inject IStringLocalizer<Comments> L
+
+<FshTitle Title="@L["Comments"]" Description="@L["Manage Comments."]" />
+
+<EntityTable @ref="_table" TEntity="CommentDto" TId="Guid" TRequest="CommentViewModel" Context="@Context">
+
+    <AdvancedSearchContent>
+      
+   </AdvancedSearchContent>
+
+    <EditFormContent>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="@L["Title"]" For="@(() => context.Title)" @bind-Value="context.Title" />
+        </MudItem>
+           <MudItem xs="12" md="6">
+            <MudTextField Label="@L["Email"]" For="@(() => context.Email)" @bind-Value="context.Email" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="@L["Description"]" For="@(() => context.Description)"
+                @bind-Value="context.Description" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="@L["PhoneNumber"]" For="@(() => context.PhoneNumber)" @bind-Value="context.PhoneNumber" />
+        </MudItem>
+      
+    </EditFormContent>
+
+</EntityTable>

@@ -6,8 +6,6 @@ namespace csumathboy.Application.Posts.Tags;
 
 public class SearchTagRequest : PaginationFilter, IRequest<PaginationResponse<TagDto>>
 {
-    public string? Name { get; set; }
-
 }
 
 public class SearchTagRequestHandler : IRequestHandler<SearchTagRequest, PaginationResponse<TagDto>>

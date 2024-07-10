@@ -6,8 +6,6 @@ namespace csumathboy.Application.Posts.Classifications;
 
 public class SearchClassificationRequest : PaginationFilter, IRequest<PaginationResponse<ClassificationDto>>
 {
-    public string? Name { get; set; }
-
 }
 
 public class SearchClassificationRequestHandler : IRequestHandler<SearchClassificationRequest, PaginationResponse<ClassificationDto>>

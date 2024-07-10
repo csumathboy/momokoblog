@@ -1,11 +1,11 @@
-﻿@page "/posts/classification"
-@attribute [MustHavePermission(FSHAction.View, FSHResource.Classification)]
+﻿@page "/posts/tag"
+@attribute [MustHavePermission(FSHAction.View, FSHResource.Tag)]
 
-@inject IStringLocalizer<Classifications> L
+@inject IStringLocalizer<Tag> L
 
-<FshTitle Title="@L["Classifications"]" Description="@L["Manage Classifications."]" />
+<FshTitle Title="@L["Tags"]" Description="@L["Manage Tags."]" />
 
-<EntityTable @ref="_table" TEntity="ClassificationDto" TId="Guid" TRequest="ClassificationViewModel" Context="@Context">
+<EntityTable @ref="_table" TEntity="TagDto" TId="Guid" TRequest="TagViewModel" Context="@Context">
 
     <AdvancedSearchContent>
       
@@ -17,10 +17,6 @@
         </MudItem>
            <MudItem xs="12" md="6">
             <MudTextField Label="@L["NickName"]" For="@(() => context.NickName)" @bind-Value="context.NickName" />
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField Label="@L["Description"]" For="@(() => context.Description)"
-                @bind-Value="context.Description" />
         </MudItem>
         <MudItem xs="12" md="6">
             <MudTextField Label="@L["ArtCount"]" For="@(() => context.ArtCount)" @bind-Value="context.ArtCount" />

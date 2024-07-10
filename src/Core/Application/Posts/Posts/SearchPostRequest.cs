@@ -6,8 +6,9 @@ namespace csumathboy.Application.Posts.Posts;
 
 public class SearchPostRequest : PaginationFilter, IRequest<PaginationResponse<PostDto>>
 {
-    public string? Title { get; set; }
-
+    public Guid? ClassId { get; set; }
+    public decimal? MinimumSort { get; set; }
+    public decimal? MaximumSort { get; set; }
 }
 
 public class SearchPostRequestHandler : IRequestHandler<SearchPostRequest, PaginationResponse<PostDto>>

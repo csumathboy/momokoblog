@@ -14,7 +14,7 @@ public partial class Posts
     [Inject]
     protected IPostClient PostClient { get; set; } = default!;
     [Inject]
-    protected IBrandsClient BrandsClient { get; set; } = default!;
+    protected IClassificationClient ClassificationClient { get; set; } = default!;
 
     protected EntityServerTableContext<PostDto, Guid, PostViewModel> Context { get; set; } = default!;
 
@@ -27,89 +27,79 @@ public partial class Posts
             entityResource: FSHResource.Post,
             fields: new()
             {
-                new(prod => prod.Id, L["Id"], "Id"),
-                new(prod => prod.Name, L["Name"], "Name"),
-                new(prod => prod.BrandName, L["Brand"], "Brand.Name"),
-                new(prod => prod.Description, L["Description"], "Description"),
-                new(prod => prod.Rate, L["Rate"], "Rate")
+                new(pos => pos.Id, L["Id"], "Id"),
+                new(pos => pos.Title, L["Title"], "Title"),
+                new(pos => pos.Classification.Name, L["Name"], "Classification.Name"),
+                new(pos => pos.Author, L["Author"], "Author"),
+                new(pos => pos.Sort, L["Sort"], "Sort")
             },
             enableAdvancedSearch: true,
-            idFunc: prod => prod.ClassId,
+            idFunc: pos => pos.Id,
             searchFunc: async filter =>
             {
                 var postFilter = filter.Adapt<SearchPostRequest>();
 
-                postFilter.BrandId = SearchBrandId == default ? null : SearchBrandId;
-                postFilter.MinimumRate = SearchMinimumRate;
-                postFilter.MaximumRate = SearchMaximumRate;
+                postFilter.ClassId = SearchClassId == default ? null : SearchClassId;
+                postFilter.MinimumSort = SearchMinimumSort;
+                postFilter.MaximumSort = SearchMaximumSort;
 
                 var result = await PostClient.SearchAsync(postFilter);
                 return result.Adapt<PaginationResponse<PostDto>>();
             },
-            createFunc: async prod =>
+            createFunc: async pos =>
             {
-                if (!string.IsNullOrEmpty(prod.ImageInBytes))
+                if (!string.IsNullOrEmpty(pos.ImageInBytes))
                 {
-                    prod.Image = new FileUploadRequest() { Data = prod.ImageInBytes, Extension = prod.ImageExtension ?? string.Empty, Name = $"{prod.Name}_{Guid.NewGuid():N}" };
+                    pos.Image = new FileUploadRequest() { Data = pos.ImageInBytes, Extension = pos.ImageExtension ?? string.Empty, Name = $"{pos.Title}_{Guid.NewGuid():N}" };
                 }
 
-                await PostClient.CreateAsync(prod.Adapt<CreatePostRequest>());
-                prod.ImageInBytes = string.Empty;
+                await PostClient.CreateAsync(pos.Adapt<CreatePostRequest>());
+                pos.ImageInBytes = string.Empty;
             },
-            updateFunc: async (id, prod) =>
+            updateFunc: async (id, pos) =>
             {
-                if (!string.IsNullOrEmpty(prod.ImageInBytes))
+                if (!string.IsNullOrEmpty(pos.ImageInBytes))
                 {
-                    prod.DeleteCurrentImage = true;
-                    prod.Image = new FileUploadRequest() { Data = prod.ImageInBytes, Extension = prod.ImageExtension ?? string.Empty, Name = $"{prod.Name}_{Guid.NewGuid():N}" };
+                    pos.DeleteCurrentImage = true;
+                    pos.Image = new FileUploadRequest() { Data = pos.ImageInBytes, Extension = pos.ImageExtension ?? string.Empty, Name = $"{pos.Title}_{Guid.NewGuid():N}" };
                 }
 
-                await PostClient.UpdateAsync(id, prod.Adapt<UpdatePostRequest>());
-                prod.ImageInBytes = string.Empty;
-            },
-            exportFunc: async filter =>
-            {
-                var exportFilter = filter.Adapt<ExportPostRequest>();
-
-                exportFilter.BrandId = SearchBrandId == default ? null : SearchBrandId;
-                exportFilter.MinimumRate = SearchMinimumRate;
-                exportFilter.MaximumRate = SearchMaximumRate;
-
-                return await PostClient.ExportAsync(exportFilter);
+                await PostClient.UpdateAsync(id, pos.Adapt<UpdatePostRequest>());
+                pos.ImageInBytes = string.Empty;
             },
             deleteFunc: async id => await PostClient.DeleteAsync(id));
 
     // Advanced Search
 
-    private Guid _searchBrandId;
-    private Guid SearchBrandId
+    private Guid _searchClassId;
+    private Guid SearchClassId
     {
-        get => _searchBrandId;
+        get => _searchClassId;
         set
         {
-            _searchBrandId = value;
+            _searchClassId = value;
             _ = _table.ReloadDataAsync();
         }
     }
 
-    private decimal _searchMinimumRate;
-    private decimal SearchMinimumRate
+    private decimal _searchMinimumSort;
+    private decimal SearchMinimumSort
     {
-        get => _searchMinimumRate;
+        get => _searchMinimumSort;
         set
         {
-            _searchMinimumRate = value;
+            _searchMinimumSort = value;
             _ = _table.ReloadDataAsync();
         }
     }
 
-    private decimal _searchMaximumRate = 9999;
-    private decimal SearchMaximumRate
+    private decimal _searchMaximumSort = 9999;
+    private decimal SearchMaximumSort
     {
-        get => _searchMaximumRate;
+        get => _searchMaximumSort;
         set
         {
-            _searchMaximumRate = value;
+            _searchMaximumSort = value;
             _ = _table.ReloadDataAsync();
         }
     }
@@ -150,6 +140,7 @@ public partial class Posts
         Context.AddEditModal.ForceRender();
     }
 }
+
 public class PostViewModel : UpdatePostRequest
 {
     public string? ImagePath { get; set; }

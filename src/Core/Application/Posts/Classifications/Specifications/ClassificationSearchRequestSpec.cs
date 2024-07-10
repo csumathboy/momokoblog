@@ -7,6 +7,5 @@ public class ClassificationSearchRequestSpec : EntitiesByPaginationFilterSpec<Cl
     public ClassificationSearchRequestSpec(SearchClassificationRequest request)
         : base(request) =>
         Query
-            .OrderBy(c => c.Name, !request.HasOrderBy())
-            .Where(p => p.Name.Equals(request.Name));
+            .OrderBy(c => c.Name, !request.HasOrderBy());
 }
