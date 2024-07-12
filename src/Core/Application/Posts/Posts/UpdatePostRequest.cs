@@ -9,13 +9,13 @@ public class UpdatePostRequest : IRequest<Guid>
 {
     public Guid Id { get; set; }
 
-    public string Title { get; private set; } = default!;
+    public string Title { get; set; } = default!;
 
     public string Author { get; set; } = default!;
 
     public string Description { get; set; } = string.Empty;
 
-    public Guid ClassId { get; private set; }
+    public Guid ClassId { get; set; }
 
     public string ContextValue { get; set; } = default!;
 
@@ -23,9 +23,10 @@ public class UpdatePostRequest : IRequest<Guid>
 
     public bool IsTop { get; set; } = false;
 
-    public PostStatus PostsStatus { get; set; } = default!;
+    public int PostsStatus { get; set; } = 0;
 
     public bool DeleteCurrentImage { get; set; } = false;
+
     public FileUploadRequest? Image { get; set; }
 
 }
@@ -35,9 +36,9 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
     private readonly IRepository<Post> _repository;
     private readonly IStringLocalizer _t;
     private readonly IFileStorageService _file;
-
-    public UpdatePostRequestHandler(IRepository<Post> repository, IStringLocalizer<UpdatePostRequestHandler> localizer, IFileStorageService file) =>
-        (_repository, _t,_file) = (repository, localizer,file);
+    private readonly IRepository<Classification> _classRepository;
+    public UpdatePostRequestHandler(IRepository<Post> repository, IRepository<Classification> classRepository, IStringLocalizer<UpdatePostRequestHandler> localizer, IFileStorageService file) =>
+        (_repository, _classRepository, _t, _file) = (repository, classRepository, localizer, file);
 
     public async Task<Guid> Handle(UpdatePostRequest request, CancellationToken cancellationToken)
     {
@@ -68,17 +69,17 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
             post.UpdateTitle(request.Title);
         }
 
-        if (string.IsNullOrEmpty(request.Description))
+        if (!string.IsNullOrEmpty(request.Description))
         {
-            post.UpdateDescription(request.Description!);
+            post.UpdateDescription(request.Description);
         }
 
-        if (string.IsNullOrEmpty(request.Author))
+        if (!string.IsNullOrEmpty(request.Author))
         {
             post.UpdateAuthor(request.Author!);
         }
 
-        if (string.IsNullOrEmpty(request.ContextValue))
+        if (!string.IsNullOrEmpty(request.ContextValue))
         {
             post.UpdateContextValue(request.ContextValue);
         }
@@ -88,15 +89,36 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
             post.UpdateSort(request.Sort);
         }
 
+        if (!string.IsNullOrEmpty(productImagePath))
+        {
+            post.UpdatePicture(productImagePath);
+        }
+
+        if (request.PostsStatus > 0)
+        {
+            PostStatus postStatus = PostStatus.Pulish;
+            switch (request.PostsStatus)
+            {
+                case 1:
+                    postStatus = PostStatus.Pulish; break;
+                case 2:
+                    postStatus = PostStatus.Draft; break;
+                case 3:
+                    postStatus = PostStatus.Delete; break;
+                default:
+                    postStatus = PostStatus.Pulish; break;
+            }
+
+            post.UpdatePostsStatus(postStatus);
+        }
+
         if (request.ClassId != default)
         {
             post.UpdateClassification(request.ClassId);
         }
 
-        if (!string.IsNullOrEmpty(productImagePath))
-        {
-            post.UpdatePicture(productImagePath);
-        }
+        var classfication = await _classRepository.GetByIdAsync(request.ClassId);
+        post.UpdateClassification(classfication!);
 
         // Add Domain Events to be raised after the commit
         post.DomainEvents.Add(EntityUpdatedEvent.WithEntity(post));

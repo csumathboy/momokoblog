@@ -5,15 +5,15 @@ using System.Diagnostics;
 namespace csumathboy.Domain.PostsAggregate;
 public class Post : AuditableEntity, IAggregateRoot
 {
-    public string Title { get; private set; }
+    public string Title { get; set; }
 
     public string Author { get; set; }
 
     public string Description { get; set; } = string.Empty;
 
-    public Classification Classification { get; set; } = new(string.Empty, string.Empty, string.Empty);
+    public Classification? Classification { get; set; }
 
-    public Guid ClassId { get; private set; }
+    public Guid ClassId { get; set; }
 
     public string ContextValue { get; set; }
 
@@ -23,15 +23,15 @@ public class Post : AuditableEntity, IAggregateRoot
 
     public bool IsTop { get; set; } = false;
 
-    public ICollection<Tag> Tags { get; private set; }
+    public ICollection<Tag>? Tags { get; set; }
 
     public PostStatus PostsStatus { get; set; }
 
     public Post(string title, Guid classId, string author, string description, string contextValue, string picture, int sort, bool isTop, PostStatus postsStatus)
     {
         Title = Guard.Against.NullOrEmpty(title, nameof(title));
-        ClassId = Guard.Against.NullOrEmpty(classId);
-        Author = Guard.Against.NullOrEmpty(author);
+        ClassId = classId;
+        Author = Guard.Against.NullOrEmpty(author, nameof(author));
         Description = description;
         ContextValue = contextValue;
         Picture = picture;
@@ -46,6 +46,7 @@ public class Post : AuditableEntity, IAggregateRoot
         Picture = string.Empty;
         return this;
     }
+
     public void AddTags(Tag newTags)
     {
         Guard.Against.Null(newTags, nameof(newTags));
@@ -60,7 +61,12 @@ public class Post : AuditableEntity, IAggregateRoot
 
     public void UpdateClassification(Guid newClassId)
     {
-        ClassId = Guard.Against.NullOrEmpty(newClassId);
+        ClassId = newClassId;
+    }
+
+    public void UpdateClassification(Classification newClassification)
+    {
+        Classification = newClassification;
     }
 
     public void UpdateAuthor(string newAuthor)

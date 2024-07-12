@@ -6,13 +6,13 @@ namespace csumathboy.Application.Posts.Posts;
 
 public class CreatePostRequest : IRequest<Guid>
 {
-    public string Title { get; private set; } = default!;
+    public string Title { get; set; } = default!;
 
     public string Author { get; set; } = default!;
 
     public string Description { get; set; } = string.Empty;
 
-    public Guid ClassId { get; private set; }
+    public Guid ClassId { get; set; }
 
     public string ContextValue { get; set; } = default!;
 
@@ -20,7 +20,7 @@ public class CreatePostRequest : IRequest<Guid>
 
     public bool IsTop { get; set; } = false;
 
-    public PostStatus PostsStatus { get; set; } = default!;
+    public int PostsStatus { get; set; } = default!;
 
     public FileUploadRequest? Image { get; set; }
 }
@@ -28,14 +28,30 @@ public class CreatePostRequest : IRequest<Guid>
 public class CreatePostRequestHandler : IRequestHandler<CreatePostRequest, Guid>
 {
     private readonly IRepository<Post> _repository;
+    private readonly IRepository<Classification> _classRepository;
     private readonly IFileStorageService _file;
-    public CreatePostRequestHandler(IRepository<Post> repository, IFileStorageService file) => (_repository, _file) = (repository, file);
+    public CreatePostRequestHandler(IRepository<Post> repository, IRepository<Classification> classRepository, IFileStorageService file) => (_repository, _classRepository, _file) = (repository, classRepository, file);
 
     public async Task<Guid> Handle(CreatePostRequest request, CancellationToken cancellationToken)
     {
         string postImagePath = await _file.UploadAsync<Post>(request.Image, FileType.Image, cancellationToken);
+        PostStatus postStatus = PostStatus.Pulish;
+        switch (request.PostsStatus)
+        {
+            case 1:
+                postStatus = PostStatus.Pulish; break;
+            case 2:
+                postStatus = PostStatus.Draft; break;
+            case 3:
+                postStatus = PostStatus.Delete; break;
+            default:
+                postStatus = PostStatus.Pulish; break;
+        }
 
-        var post = new Post(request.Title, request.ClassId, request.Author, request.Description, request.ContextValue, postImagePath, request.Sort, request.IsTop, request.PostsStatus);
+        var classfication = await _classRepository.GetByIdAsync(request.ClassId);
+
+        var post = new Post(request.Title, request.ClassId, request.Author, request.Description, request.ContextValue, postImagePath, request.Sort, request.IsTop, postStatus);
+        post.UpdateClassification(classfication!);
 
         // Add Domain Events to be raised after the commit
         post.DomainEvents.Add(EntityCreatedEvent.WithEntity(post));

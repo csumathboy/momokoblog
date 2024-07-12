@@ -12,7 +12,7 @@ public class EntityServerTableContext<TEntity, TId, TRequest>
     /// A function that loads the specified page from the api with the specified search criteria
     /// and returns a PaginatedResult of TEntity.
     /// </summary>
-    public Func<PaginationFilter, Task<PaginationResponse<TEntity>>> SearchFunc { get; }
+    public Func<PaginationFilter, Task<PaginationResponse<TEntity>>>? SearchFunc { get; }
 
     /// <summary>
     /// A function that exports the specified data from the API.
@@ -23,7 +23,7 @@ public class EntityServerTableContext<TEntity, TId, TRequest>
 
     public EntityServerTableContext(
         List<EntityField<TEntity>> fields,
-        Func<PaginationFilter, Task<PaginationResponse<TEntity>>> searchFunc,
+        Func<PaginationFilter, Task<PaginationResponse<TEntity>>>? searchFunc,
         Func<BaseFilter, Task<FileResponse>>? exportFunc = null,
         bool enableAdvancedSearch = false,
         Func<TEntity, TId>? idFunc = null,

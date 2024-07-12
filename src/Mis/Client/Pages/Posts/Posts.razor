@@ -27,14 +27,9 @@
         <MudItem xs="12" md="6">
             <MudTextField Label="@L["Sort"]" For="@(() => context.Sort)" @bind-Value="context.Sort" />
         </MudItem>
-         <MudItem xs="12" md="6">
-             <MudCheckBox  Label="@L["Sort"]" For="@(() => context.Sort)" @bind-Value="context.IsTop"></MudCheckBox>
-        </MudItem>
-         <MudItem xs="12" md="6">
-            <MudTextField Label="@L["Sort"]" For="@(() => context.Sort)" @bind-Value="context.Sort" />
-        </MudItem>
+      
           <MudItem xs="12" md="12">
-            <MudTextField Label="@L["Description"]" For="@(() => context.Description)" @bind-Value="context.Description" />
+              <MudTextField Label="@L["Description"]" For="@(() => context.Description)" @bind-Value="context.Description" />  
         </MudItem>
         <MudItem xs="12" md="12">
             <MudItem>
@@ -76,6 +71,18 @@
                 <InputFile id="fileInput" hidden OnChange="UploadFiles" />
             </MudItem>
         </MudItem>
+        <MudItem xs="12" md="12">
+           <MarkdownEditor @bind-Value="context.ContextValue"  />
+
+        </MudItem>
+         <MudItem xs="12" md="6">
+            <MudCheckBox Label="@L["IsTop"]" For="@(() => context.IsTop)" ></MudCheckBox>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudTextField Label="@L["PostsStatus"]" For="@(() => context.PostsStatus)"  @bind-Value="context.PostsStatus" />
+        </MudItem>
     </EditFormContent>
 
 </EntityTable>
+ 
+  

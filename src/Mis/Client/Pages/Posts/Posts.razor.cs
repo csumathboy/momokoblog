@@ -6,6 +6,7 @@ using Mapster;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
+using System.Runtime.CompilerServices;
 
 namespace csumathboy.Client.Pages.Posts;
 
@@ -31,6 +32,7 @@ public partial class Posts
                 new(pos => pos.Title, L["Title"], "Title"),
                 new(pos => pos.Classification.Name, L["Name"], "Classification.Name"),
                 new(pos => pos.Author, L["Author"], "Author"),
+                new(pos => pos.IsTop, L["IsTop"], "IsTop"),
                 new(pos => pos.Sort, L["Sort"], "Sort")
             },
             enableAdvancedSearch: true,
@@ -44,7 +46,28 @@ public partial class Posts
                 postFilter.MaximumSort = SearchMaximumSort;
 
                 var result = await PostClient.SearchAsync(postFilter);
+                TypeAdapterConfig<PaginationResponseOfPostDto, PaginationResponse<PostDto>>.NewConfig()
+                  .Fork(config => config.Default.PreserveReference(true));
                 return result.Adapt<PaginationResponse<PostDto>>();
+            },
+            getDetailsFunc: async (id) =>
+            {
+                var postDetail = await PostClient.GetAsync(id);
+
+                return new PostViewModel()
+                {
+                    Id = id,
+                    Author = postDetail.Author,
+                    ClassId = postDetail.ClassId,
+                    DeleteCurrentImage = false,
+                    ContextValue = postDetail.ContextValue,
+                    Description = postDetail.Description,
+                    IsTop = postDetail.IsTop,
+                    Title = postDetail.Title,
+                    Sort = postDetail.Sort,
+                    PostsStatus = postDetail.PostsStatus.Value,
+
+                };
             },
             createFunc: async pos =>
             {

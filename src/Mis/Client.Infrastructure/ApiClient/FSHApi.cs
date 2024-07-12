@@ -9798,7 +9798,7 @@ namespace csumathboy.Client.Infrastructure.ApiClient
         public bool IsTop { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("postsStatus", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PostStatus PostsStatus { get; set; } = default!;
+        public int PostsStatus { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("image", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public FileUploadRequest? Image { get; set; } = default!;
@@ -9854,7 +9854,7 @@ namespace csumathboy.Client.Infrastructure.ApiClient
         public bool IsTop { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("postsStatus", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public PostStatus PostsStatus { get; set; } = default!;
+        public int PostsStatus { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("deleteCurrentImage", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool DeleteCurrentImage { get; set; } = default!;
