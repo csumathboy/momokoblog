@@ -4,14 +4,21 @@ using csumathboy.Client.Infrastructure.Common;
 using csumathboy.Shared.Authorization;
 using Mapster;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using MudBlazor;
+using PSC.Blazor.Components.MarkdownEditor;
 using System.Runtime.CompilerServices;
+using static MudBlazor.CategoryTypes;
 
 namespace csumathboy.Client.Pages.Posts;
 
 public partial class Posts
 {
+    [Inject]
+    private IAccessTokenProvider TokenProvider { get; set; } = default!;
+
     [Inject]
     protected IPostClient PostClient { get; set; } = default!;
     [Inject]
@@ -20,8 +27,24 @@ public partial class Posts
     protected EntityServerTableContext<PostDto, Guid, PostViewModel> Context { get; set; } = default!;
 
     private EntityTable<PostDto, Guid, PostViewModel> _table = default!;
+    protected override async Task OnInitializedAsync()
+    {
+        _uploadAuthetication = await TokenProvider.GetAccessTokenAsync();
 
-    protected override void OnInitialized() =>
+    }
+
+    protected override void OnInitialized()
+    {
+        _localMarkdownImageTexts = new MarkdownImageTexts()
+        {
+            Init = "如需上传图片，请直接将图片拖拽到文本编辑框内，或从剪切板粘贴到编辑框。",
+            OnDragEnter = "请放开拖拽的图片直接上传。",
+            OnDrop = "上传图片....",
+            Progress = "图片上传中...",
+            OnUploaded = "图片已上传。",
+            SizeUnits = "B, KB, MB"
+        };
+
         Context = new(
             entityName: L["Post"],
             entityNamePlural: L["Post"],
@@ -62,10 +85,11 @@ public partial class Posts
                     DeleteCurrentImage = false,
                     ContextValue = postDetail.ContextValue,
                     Description = postDetail.Description,
-                    IsTop = postDetail.IsTop,
+                    IsTop = Convert.ToInt32(postDetail.IsTop),
                     Title = postDetail.Title,
                     Sort = postDetail.Sort,
                     PostsStatus = postDetail.PostsStatus.Value,
+                    ImagePath = postDetail.Picture
 
                 };
             },
@@ -75,6 +99,7 @@ public partial class Posts
                 {
                     pos.Image = new FileUploadRequest() { Data = pos.ImageInBytes, Extension = pos.ImageExtension ?? string.Empty, Name = $"{pos.Title}_{Guid.NewGuid():N}" };
                 }
+
 
                 await PostClient.CreateAsync(pos.Adapt<CreatePostRequest>());
                 pos.ImageInBytes = string.Empty;
@@ -91,6 +116,7 @@ public partial class Posts
                 pos.ImageInBytes = string.Empty;
             },
             deleteFunc: async id => await PostClient.DeleteAsync(id));
+    }
 
     // Advanced Search
 
@@ -126,6 +152,27 @@ public partial class Posts
             _ = _table.ReloadDataAsync();
         }
     }
+
+    private string? _uploadAuthetication;
+    private string? UploadAuthetication
+    {
+        get => _uploadAuthetication;
+        set
+        {
+            _uploadAuthetication = value;
+        }
+    }
+
+    private MarkdownImageTexts? _localMarkdownImageTexts;
+    private MarkdownImageTexts? LocalMarkdownImageTexts
+    {
+        get => _localMarkdownImageTexts;
+        set
+        {
+            _localMarkdownImageTexts = value;
+        }
+    }
+
 
     // TODO : Make this as a shared service or something? Since it's used by Profile Component also for now, and literally any other component that will have image upload.
     // The new service should ideally return $"data:{ApplicationConstants.StandardImageFormat};base64,{Convert.ToBase64String(buffer)}"
@@ -164,9 +211,12 @@ public partial class Posts
     }
 }
 
+
+
 public class PostViewModel : UpdatePostRequest
 {
     public string? ImagePath { get; set; }
     public string? ImageInBytes { get; set; }
     public string? ImageExtension { get; set; }
+
 }

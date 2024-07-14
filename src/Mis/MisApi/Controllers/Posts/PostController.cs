@@ -1,4 +1,5 @@
 ﻿using csumathboy.Application.Posts.Posts;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace csumathboy.MisApi.Controllers.Posts;
@@ -44,5 +45,13 @@ public class PostController : VersionedApiController
     public Task<Guid> DeleteAsync(Guid id)
     {
         return Mediator.Send(new DeletePostRequest(id));
+    }
+
+    [HttpPost("upload")]
+    [MustHavePermission(FSHAction.Update, FSHResource.Post)]
+    [OpenApiOperation("Upload a file.", "")]
+    public Task<string> UploadFile(CommonUploadRequest request)
+    { 
+        return Mediator.Send(request);
     }
 }

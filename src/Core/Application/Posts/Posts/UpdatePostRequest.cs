@@ -21,7 +21,7 @@ public class UpdatePostRequest : IRequest<Guid>
 
     public int Sort { get; set; } = 0;
 
-    public bool IsTop { get; set; } = false;
+    public int IsTop { get; set; } = 0;
 
     public int PostsStatus { get; set; } = 0;
 
@@ -111,6 +111,8 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
 
             post.UpdatePostsStatus(postStatus);
         }
+
+        post.UpdateIsTop(Convert.ToBoolean(request.IsTop));
 
         if (request.ClassId != default)
         {

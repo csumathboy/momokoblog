@@ -18,9 +18,9 @@ public class CreatePostRequest : IRequest<Guid>
 
     public int Sort { get; set; } = 0;
 
-    public bool IsTop { get; set; } = false;
+    public int IsTop { get; set; } = 0;
 
-    public int PostsStatus { get; set; } = default!;
+    public int PostsStatus { get; set; } = 1;
 
     public FileUploadRequest? Image { get; set; }
 }
@@ -50,7 +50,7 @@ public class CreatePostRequestHandler : IRequestHandler<CreatePostRequest, Guid>
 
         var classfication = await _classRepository.GetByIdAsync(request.ClassId);
 
-        var post = new Post(request.Title, request.ClassId, request.Author, request.Description, request.ContextValue, postImagePath, request.Sort, request.IsTop, postStatus);
+        var post = new Post(request.Title, request.ClassId, request.Author, request.Description, request.ContextValue, postImagePath, request.Sort, Convert.ToBoolean(request.IsTop), postStatus);
         post.UpdateClassification(classfication!);
 
         // Add Domain Events to be raised after the commit

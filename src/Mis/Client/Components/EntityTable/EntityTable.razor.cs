@@ -270,14 +270,16 @@ public partial class EntityTable<TEntity, TId, TRequest>
 
         parameters.Add(nameof(AddEditModal<TRequest>.RequestModel), requestModel);
         bool isFullScreen = false;
+        var maxWidth = MaxWidth.Medium;
 
         // Post has large Editor.
         if (Context.EntityName.Equals("Post"))
         {
             isFullScreen = true;
+            maxWidth = MaxWidth.ExtraLarge;
         }
 
-        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Medium, FullScreen = isFullScreen, FullWidth = true, DisableBackdropClick = true };
+        var options = new DialogOptions { CloseButton = true, MaxWidth = maxWidth, FullScreen = isFullScreen, FullWidth = true, DisableBackdropClick = true };
 
         var dialog = DialogService.Show<AddEditModal<TRequest>>(string.Empty, parameters, options);
 

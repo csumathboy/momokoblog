@@ -94,6 +94,11 @@ public class Post : AuditableEntity, IAggregateRoot
         Sort = Guard.Against.NegativeOrZero(newSort, nameof(newSort));
     }
 
+    public void UpdateIsTop(bool newIsTop)
+    {
+        IsTop = newIsTop;
+    }
+
     public void UpdatePostsStatus(PostStatus newPostsStatus)
     {
         PostsStatus = newPostsStatus;

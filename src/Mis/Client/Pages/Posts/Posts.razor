@@ -4,7 +4,6 @@
 @inject IStringLocalizer<Posts> L
 
 <FshTitle Title="@L["Posts"]" Description="@L["Manage Posts."]" />
-
 <EntityTable @ref="_table" TEntity="PostDto" TId="Guid" TRequest="PostViewModel" Context="@Context">
 
     <AdvancedSearchContent>
@@ -29,17 +28,33 @@
         </MudItem>
       
           <MudItem xs="12" md="12">
-              <MudTextField Label="@L["Description"]" For="@(() => context.Description)" @bind-Value="context.Description" />  
+              <MudTextField Label="@L["Description"]" Lines="5" For="@(() => context.Description)" @bind-Value="context.Description" />  
+        </MudItem>
+        <MudItem xs="12" md="6">
+             <MudSelect Label="@L["IsTop"]"  @bind-Value="context.IsTop" HelperText="是否置顶"   AdornmentColor="Color.Secondary">
+                 <MudSelectItem Value="0">否</MudSelectItem>
+                 <MudSelectItem Value="1">是</MudSelectItem>
+           
+            </MudSelect>  
+     
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <MudSelect Label="@L["PostsStatus"]"  @bind-Value="context.PostsStatus" HelperText="发布状态"   AdornmentColor="Color.Secondary">
+                <MudSelectItem Value="0">请选择</MudSelectItem>
+                <MudSelectItem Value="1">已发布</MudSelectItem>
+                 <MudSelectItem Value="2">待发布</MudSelectItem>
+                 <MudSelectItem Value="3">已删除</MudSelectItem>
+            </MudSelect>
         </MudItem>
         <MudItem xs="12" md="12">
             <MudItem>
                 @if(!string.IsNullOrEmpty(context.ImageInBytes))
                 {
-                    <MudAvatar Image ="@context.ImageInBytes" Square="true" Style="height: auto; width: auto; max-height: 100%"> </MudAvatar>
+                    <MudAvatar Image ="@context.ImageInBytes" Square="true" Style="height: auto; width: auto; max-height: 300px;max-width:500px;"> </MudAvatar>
                 }
                 else
                 {
-                    <MudAvatar Image="@(string.IsNullOrEmpty(@context.ImagePath) ? string.Empty : (Config[ConfigNames.ApiBaseUrl] + @context.ImagePath))" Square="true" Style="height: auto; width: auto; max-height: 100%"> </MudAvatar>
+                    <MudAvatar Image="@(string.IsNullOrEmpty(@context.ImagePath) ? string.Empty : (Config[ConfigNames.ApiBaseUrl] + @context.ImagePath))" Square="true" Style="height: auto; width: auto;  max-height: 300px;max-width:500px;"> </MudAvatar>
                 }
             </MudItem>
             <MudItem>
@@ -72,15 +87,46 @@
             </MudItem>
         </MudItem>
         <MudItem xs="12" md="12">
-           <MarkdownEditor @bind-Value="context.ContextValue"  />
+           <MarkdownEditor @bind-Value="context.ContextValue"
+                    ImageUploadEndpoint="https://apimk.chouxiangpai.com:8443/api/files"
+                    ImageUploadChanged="@OnImageUploadChanged"
+                    ImageUploadStarted="@OnImageUploadStarted"
+                    ImageUploadProgressed="@OnImageUploadProgressed"
+                    ImageUploadAuthenticationSchema="Bearer"
+                    ImageUploadAuthenticationToken="@UploadAuthetication"
+                    ImageTexts="@LocalMarkdownImageTexts"
+                    ImageUploadEnded="@OnImageUploadEnded"
+                    UploadImage="true" 
+           />
 
         </MudItem>
-         <MudItem xs="12" md="6">
-            <MudCheckBox Label="@L["IsTop"]" For="@(() => context.IsTop)" ></MudCheckBox>
-        </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField Label="@L["PostsStatus"]" For="@(() => context.PostsStatus)"  @bind-Value="context.PostsStatus" />
-        </MudItem>
+        @code {
+             
+            async Task OnImageUploadChanged(FileChangedEventArgs e)
+            {
+                this.StateHasChanged();
+            }
+
+            Task OnImageUploadStarted(FileStartedEventArgs e)
+            {
+                Console.WriteLine($"开始上传图片: {e.File.Name}");
+                return Task.CompletedTask;
+            }
+
+            Task OnImageUploadProgressed(FileProgressedEventArgs e)
+            {
+                Console.WriteLine($"图片: {e.File.Name} 正在处理: {(int)e.Percentage}");
+                return Task.CompletedTask;
+            }
+
+            Task OnImageUploadEnded(FileEndedEventArgs e)
+            {
+                Console.WriteLine($"图片上传完成: {e.File.Name}, 成功: {e.Success}");
+                return Task.CompletedTask;
+            }
+
+         
+        }
     </EditFormContent>
 
 </EntityTable>
