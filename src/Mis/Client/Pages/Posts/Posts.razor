@@ -102,9 +102,10 @@
         </MudItem>
         @code {
              
-            async Task OnImageUploadChanged(FileChangedEventArgs e)
+            Task OnImageUploadChanged(FileChangedEventArgs e)
             {
                 this.StateHasChanged();
+                return Task.CompletedTask;
             }
 
             Task OnImageUploadStarted(FileStartedEventArgs e)
