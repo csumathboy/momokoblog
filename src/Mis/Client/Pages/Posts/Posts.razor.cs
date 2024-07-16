@@ -1,6 +1,7 @@
 ﻿using csumathboy.Client.Components.EntityTable;
 using csumathboy.Client.Infrastructure.ApiClient;
 using csumathboy.Client.Infrastructure.Common;
+using csumathboy.Client.Shared;
 using csumathboy.Shared.Authorization;
 using Mapster;
 using Microsoft.AspNetCore.Components;
@@ -21,6 +22,10 @@ public partial class Posts
 
     [Inject]
     protected IPostClient PostClient { get; set; } = default!;
+
+    [Inject]
+    private ITagClient TagClient { get; set; } = default!;
+
     [Inject]
     protected IClassificationClient ClassificationClient { get; set; } = default!;
 
@@ -30,6 +35,17 @@ public partial class Posts
     protected override async Task OnInitializedAsync()
     {
         _uploadAuthetication = await TokenProvider.GetAccessTokenAsync();
+        var filter = new SearchTagRequest
+        {
+            PageSize = 100
+        };
+
+        if (await ApiHelper.ExecuteCallGuardedAsync(
+                () => TagClient.SearchAsync(filter), Snackbar)
+            is PaginationResponseOfTagDto response)
+        {
+            _tagList = response.Data.ToList();
+        }
 
     }
 
@@ -88,6 +104,7 @@ public partial class Posts
                     IsTop = Convert.ToInt32(postDetail.IsTop),
                     Title = postDetail.Title,
                     Sort = postDetail.Sort,
+                    TagList = string.Join(",", postDetail.Tags.Select(x => x.Name).ToList()),
                     PostsStatus = postDetail.PostsStatus.Value,
                     ImagePath = postDetail.Picture
 
@@ -99,8 +116,6 @@ public partial class Posts
                 {
                     pos.Image = new FileUploadRequest() { Data = pos.ImageInBytes, Extension = pos.ImageExtension ?? string.Empty, Name = $"{pos.Title}_{Guid.NewGuid():N}" };
                 }
-
-
                 await PostClient.CreateAsync(pos.Adapt<CreatePostRequest>());
                 pos.ImageInBytes = string.Empty;
             },
@@ -173,6 +188,15 @@ public partial class Posts
         }
     }
 
+    private List<TagDto>? _tagList;
+    private List<TagDto>? TagList
+    {
+        get => _tagList;
+        set
+        {
+            _tagList = value;
+        }
+    }
 
     // TODO : Make this as a shared service or something? Since it's used by Profile Component also for now, and literally any other component that will have image upload.
     // The new service should ideally return $"data:{ApplicationConstants.StandardImageFormat};base64,{Convert.ToBase64String(buffer)}"
@@ -210,8 +234,6 @@ public partial class Posts
         Context.AddEditModal.ForceRender();
     }
 }
-
-
 
 public class PostViewModel : UpdatePostRequest
 {

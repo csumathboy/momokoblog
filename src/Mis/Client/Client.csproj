@@ -8,12 +8,7 @@
         <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Compile Remove="Pages\Posts\Posts - Copy.razor.cs" />
-    </ItemGroup>
-
  
-
     <ItemGroup>
         <PackageReference Include="Mapster" Version="7.3.0" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.5" />

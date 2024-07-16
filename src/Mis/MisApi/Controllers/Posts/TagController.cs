@@ -21,6 +21,14 @@ public class TagController : VersionedApiController
         return Mediator.Send(new GetTagRequest(id));
     }
 
+    [HttpGet("{name}")]
+    [MustHavePermission(FSHAction.View, FSHResource.Tag)]
+    [OpenApiOperation("Get Tag details.", "")]
+    public Task<TagDetailsDto> GetByNameAsync(string name)
+    {
+        return Mediator.Send(new GetByNameTagRequest(name));
+    }
+
     [HttpPost]
     [MustHavePermission(FSHAction.Create, FSHResource.Tag)]
     [OpenApiOperation("Create a new Tag.", "")]

@@ -1,7 +1,10 @@
 using csumathboy.Application.Posts.Posts.Specifications;
+using csumathboy.Application.Posts.Tags;
+using csumathboy.Application.Posts.Tags.Specifications;
 using csumathboy.Domain.Catalog;
 using csumathboy.Domain.Common.Events;
 using csumathboy.Domain.PostsAggregate;
+using Mapster;
 
 namespace csumathboy.Application.Posts.Posts;
 
@@ -29,6 +32,8 @@ public class UpdatePostRequest : IRequest<Guid>
 
     public FileUploadRequest? Image { get; set; }
 
+    public string TagList { get; set; } = string.Empty;
+
 }
 
 public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
@@ -37,8 +42,9 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
     private readonly IStringLocalizer _t;
     private readonly IFileStorageService _file;
     private readonly IRepository<Classification> _classRepository;
-    public UpdatePostRequestHandler(IRepository<Post> repository, IRepository<Classification> classRepository, IStringLocalizer<UpdatePostRequestHandler> localizer, IFileStorageService file) =>
-        (_repository, _classRepository, _t, _file) = (repository, classRepository, localizer, file);
+    private readonly IRepository<Tag> _tagRepository;
+    public UpdatePostRequestHandler(IRepository<Post> repository, IRepository<Tag> tagRepository, IRepository<Classification> classRepository, IStringLocalizer<UpdatePostRequestHandler> localizer, IFileStorageService file) =>
+        (_repository, _tagRepository, _classRepository, _t, _file) = (repository, tagRepository, classRepository, localizer, file);
 
     public async Task<Guid> Handle(UpdatePostRequest request, CancellationToken cancellationToken)
     {
@@ -62,7 +68,6 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
         string? productImagePath = request.Image is not null
             ? await _file.UploadAsync<Post>(request.Image, FileType.Image, cancellationToken)
             : null;
-
 
         if (!string.IsNullOrEmpty(request.Title))
         {
@@ -122,6 +127,27 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
         var classfication = await _classRepository.GetByIdAsync(request.ClassId);
         post.UpdateClassification(classfication!);
 
+        // Modify Tags.
+        if (post.Tags != null && post.Tags.Count > 0)
+        {
+            post.RemoveAllTags();
+        }
+
+        string[] tagList = request.TagList.Split(',');
+        foreach (string tagName in tagList)
+        {
+            string name = tagName.Trim();
+            if (!string.IsNullOrEmpty(name))
+            {
+                var tag = await _tagRepository.FirstOrDefaultAsync(
+                       (ISpecification<Tag>)new TagByNameSpec(name), cancellationToken);
+                if (tag != null)
+                {
+                    post.AddTags(tag);
+                }
+            }
+        }
+
         // Add Domain Events to be raised after the commit
         post.DomainEvents.Add(EntityUpdatedEvent.WithEntity(post));
 
@@ -129,6 +155,7 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
 
         return request.Id;
     }
+
 }
 
 public class UpdatePostRequestValidator : CustomValidator<UpdatePostRequest>

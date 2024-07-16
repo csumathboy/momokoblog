@@ -24,13 +24,26 @@
             <ClassAutoComplete For="@(() => context.ClassId)" @bind-Value="context.ClassId" OffsetY="true" />
         </MudItem>
         <MudItem xs="12" md="6">
-            <MudTextField Label="@L["Sort"]" For="@(() => context.Sort)" @bind-Value="context.Sort" />
+           <MudSelect T="string" Label="@L["Tags"]" MultiSelection="true" @bind-Value="context.TagList" @bind-SelectedValues="selectOptions">
+                @foreach (var tag in TagList)
+                {
+                    <MudSelectItem T="string" Value="@tag.Name">@tag.Name</MudSelectItem>
+                }
+            </MudSelect>
+            @code {
+                private IEnumerable<string> selectOptions { get; set; } = new List<string>() { };
+                   
+            }
         </MudItem>
       
           <MudItem xs="12" md="12">
-              <MudTextField Label="@L["Description"]" Lines="5" For="@(() => context.Description)" @bind-Value="context.Description" />  
+              <MudTextField Label="@L["Description"]" Lines="4" For="@(() => context.Description)" @bind-Value="context.Description" />  
         </MudItem>
-        <MudItem xs="12" md="6">
+          <MudItem xs="12" md="4">
+            <MudTextField Label="@L["Sort"]" For="@(() => context.Sort)" @bind-Value="context.Sort" />
+        </MudItem>
+      
+        <MudItem xs="12" md="4">
              <MudSelect Label="@L["IsTop"]"  @bind-Value="context.IsTop" HelperText="是否置顶"   AdornmentColor="Color.Secondary">
                  <MudSelectItem Value="0">否</MudSelectItem>
                  <MudSelectItem Value="1">是</MudSelectItem>
@@ -38,7 +51,7 @@
             </MudSelect>  
      
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" md="4">
             <MudSelect Label="@L["PostsStatus"]"  @bind-Value="context.PostsStatus" HelperText="发布状态"   AdornmentColor="Color.Secondary">
                 <MudSelectItem Value="0">请选择</MudSelectItem>
                 <MudSelectItem Value="1">已发布</MudSelectItem>

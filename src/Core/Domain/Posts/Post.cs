@@ -23,7 +23,7 @@ public class Post : AuditableEntity, IAggregateRoot
 
     public bool IsTop { get; set; } = false;
 
-    public ICollection<Tag>? Tags { get; set; }
+    public virtual ICollection<Tag>? Tags { get; set; }
 
     public PostStatus PostsStatus { get; set; }
 
@@ -51,6 +51,12 @@ public class Post : AuditableEntity, IAggregateRoot
     {
         Guard.Against.Null(newTags, nameof(newTags));
         Tags.Add(newTags);
+
+    }
+
+    public void RemoveAllTags()
+    {
+        Tags = new Collection<Tag>();
 
     }
 

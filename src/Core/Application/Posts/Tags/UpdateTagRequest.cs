@@ -62,7 +62,7 @@ public class UpdateTagRequestValidator : CustomValidator<UpdateTagRequest>
             .MaximumLength(1024)
             .MustAsync(async (Tag, name, ct) =>
                     await TagRepo.FirstOrDefaultAsync(new TagByNameSpec(name), ct)
-                        is not Tag existingTag || existingTag.Id == Tag.Id)
+                        is not TagDetailsDto existingTag || existingTag.Id == Tag.Id)
                 .WithMessage((_, name) => T["Tag {0} already Exists.", name]);
     }
 }
