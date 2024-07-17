@@ -92,6 +92,11 @@ public partial class Posts
             getDetailsFunc: async (id) =>
             {
                 var postDetail = await PostClient.GetAsync(id);
+                List<string> selecValues = new();
+                foreach (var ptag in postDetail.PostTags)
+                {
+                    selecValues.Add(ptag.TagName);
+                }
 
                 return new PostViewModel()
                 {
@@ -104,9 +109,10 @@ public partial class Posts
                     IsTop = Convert.ToInt32(postDetail.IsTop),
                     Title = postDetail.Title,
                     Sort = postDetail.Sort,
-                    TagList = string.Join(",", postDetail.Tags.Select(x => x.Name).ToList()),
+                    TagList = string.Join(",", postDetail.PostTags.Select(x => x.TagName).ToList()),
                     PostsStatus = postDetail.PostsStatus.Value,
-                    ImagePath = postDetail.Picture
+                    ImagePath = postDetail.Picture,
+                    SelectOptions = selecValues
 
                 };
             },
@@ -116,6 +122,7 @@ public partial class Posts
                 {
                     pos.Image = new FileUploadRequest() { Data = pos.ImageInBytes, Extension = pos.ImageExtension ?? string.Empty, Name = $"{pos.Title}_{Guid.NewGuid():N}" };
                 }
+
                 await PostClient.CreateAsync(pos.Adapt<CreatePostRequest>());
                 pos.ImageInBytes = string.Empty;
             },
@@ -240,5 +247,6 @@ public class PostViewModel : UpdatePostRequest
     public string? ImagePath { get; set; }
     public string? ImageInBytes { get; set; }
     public string? ImageExtension { get; set; }
+    public IEnumerable<string> SelectOptions { get; set; } = new List<string>() { };
 
 }

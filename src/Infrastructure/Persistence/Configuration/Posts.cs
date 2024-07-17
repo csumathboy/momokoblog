@@ -53,11 +53,6 @@ public class PostConfig : IEntityTypeConfiguration<Post>
              .HasForeignKey(x => x.ClassId)
              .OnDelete(DeleteBehavior.Restrict)
              .IsRequired();
-
-        // many to many
-        builder
-            .HasMany(e => e.Tags)
-            .WithMany();
     }
 }
 
@@ -76,6 +71,31 @@ public class TagConfig : IEntityTypeConfiguration<Tag>
             .Property(p => p.NickName)
                 .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
     }
+}
+
+public class PostTagConfig : IEntityTypeConfiguration<PostTag>
+{
+    public void Configure(EntityTypeBuilder<PostTag> builder)
+    {
+        builder.ToTable("PostTag", SchemaNames.Posts);
+        builder.HasKey(x => new
+        {
+            x.PostId,
+            x.TagId
+        });
+        builder
+           .Property(x => x.TagName).IsRequired()
+               .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
+        builder
+            .HasOne(x => x.Post)
+            .WithMany(x => x.PostTags)
+            .HasForeignKey(x => x.PostId);
+        builder
+            .HasOne(x => x.Tag)
+            .WithMany(x => x.PostTags)
+            .HasForeignKey(x => x.TagId);
+    }
+
 }
 
 public class CommentConfig : IEntityTypeConfiguration<Comment>

@@ -8,7 +8,11 @@ public class Classification : AuditableEntity, IAggregateRoot
     public string? NickName { get; set; }
     public int ArtCount { get; set; }
 
- 
+    public Classification()
+    {
+        Name = string.Empty;
+    }
+
     public Classification(string name, string? nickName, string? description)
     {
         Name = Guard.Against.NullOrEmpty(name, nameof(name));

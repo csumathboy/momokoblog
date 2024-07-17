@@ -23,7 +23,7 @@ public class Post : AuditableEntity, IAggregateRoot
 
     public bool IsTop { get; set; } = false;
 
-    public virtual ICollection<Tag>? Tags { get; set; }
+    public List<PostTag> PostTags { get; } = new();
 
     public PostStatus PostsStatus { get; set; }
 
@@ -38,26 +38,12 @@ public class Post : AuditableEntity, IAggregateRoot
         Sort = sort;
         IsTop = isTop;
         PostsStatus = postsStatus;
-        Tags = new Collection<Tag>();
     }
 
     public Post ClearImagePath()
     {
         Picture = string.Empty;
         return this;
-    }
-
-    public void AddTags(Tag newTags)
-    {
-        Guard.Against.Null(newTags, nameof(newTags));
-        Tags.Add(newTags);
-
-    }
-
-    public void RemoveAllTags()
-    {
-        Tags = new Collection<Tag>();
-
     }
 
     public void UpdateTitle(string newTitle)

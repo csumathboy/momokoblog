@@ -22,6 +22,7 @@ public class ApplicationDbContext : BaseDbContext
     public DbSet<Classification> Classifications => Set<Classification>();
     public DbSet<Tag> Tags => Set<Tag>();
     public DbSet<Comment> Comments => Set<Comment>();
+    public DbSet<PostTag> PostTags => Set<PostTag>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

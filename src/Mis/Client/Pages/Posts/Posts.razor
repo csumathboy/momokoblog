@@ -24,16 +24,13 @@
             <ClassAutoComplete For="@(() => context.ClassId)" @bind-Value="context.ClassId" OffsetY="true" />
         </MudItem>
         <MudItem xs="12" md="6">
-           <MudSelect T="string" Label="@L["Tags"]" MultiSelection="true" @bind-Value="context.TagList" @bind-SelectedValues="selectOptions">
+           <MudSelect T="string" Label="@L["Tags"]" MultiSelection="true" @bind-Value="context.TagList" @bind-SelectedValues="context.SelectOptions">
                 @foreach (var tag in TagList)
                 {
                     <MudSelectItem T="string" Value="@tag.Name">@tag.Name</MudSelectItem>
                 }
             </MudSelect>
-            @code {
-                private IEnumerable<string> selectOptions { get; set; } = new List<string>() { };
-                   
-            }
+       
         </MudItem>
       
           <MudItem xs="12" md="12">

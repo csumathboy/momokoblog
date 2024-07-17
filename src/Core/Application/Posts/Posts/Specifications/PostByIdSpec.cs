@@ -4,6 +4,6 @@ using csumathboy.Domain.PostsAggregate;
 public class PostByIdSpec : Specification<Post, PostDetailsDto>, ISingleResultSpecification
 {
     public PostByIdSpec(DefaultIdType id) =>
-        Query
+        Query.Include(p => p.PostTags)
             .Where(p => p.Id == id);
 }

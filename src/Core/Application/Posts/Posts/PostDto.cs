@@ -26,5 +26,4 @@ public class PostDto : IDto
 
     public PostStatus PostsStatus { get; set; } = default!;
 
-    public ICollection<Tag> Tags { get;  set; } = default!;
 }

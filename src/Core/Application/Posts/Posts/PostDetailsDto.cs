@@ -13,7 +13,7 @@ public class PostDetailsDto : IDto
 
     public string Description { get; set; } = string.Empty;
 
-    public Classification Classification { get; set; } = default!;
+    public Classification? Classification { get; set; }
 
     public Guid ClassId { get; private set; }
 
@@ -25,7 +25,7 @@ public class PostDetailsDto : IDto
 
     public bool IsTop { get; set; } = false;
 
-    public ICollection<Tag> Tags { get; private set; } = default!;
+    public List<PostTag> PostTags { get; set; } = new();
 
     public PostStatus PostsStatus { get; set; } = default!;
 }

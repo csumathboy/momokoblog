@@ -6,7 +6,7 @@ public class Tag : AuditableEntity, IAggregateRoot
     public string Name { get; set; }
     public string? NickName { get; set; }
     public int ArtCount { get; set; }
-
+    public List<PostTag> PostTags { get; } = new();
     public Tag(string name, string? nickName)
     {
         Name = Guard.Against.NullOrEmpty(name, nameof(name));
