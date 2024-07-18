@@ -29,6 +29,8 @@ public class CreatePostRequest : IRequest<Guid>
     public FileUploadRequest? Image { get; set; }
 
     public string TagList { get; set; } = string.Empty;
+
+    public string TagIdList { get; set; } = string.Empty;
 }
 
 public class CreatePostRequestHandler : IRequestHandler<CreatePostRequest, Guid>
@@ -64,30 +66,22 @@ public class CreatePostRequestHandler : IRequestHandler<CreatePostRequest, Guid>
         // Add Domain Events to be raised after the commit
         post.DomainEvents.Add(EntityCreatedEvent.WithEntity(post));
 
-        post = await _repository.AddAsync(post, cancellationToken);
-
         // Add Tag
-        var postTagList = new List<PostTag>();
         string[] tagList = request.TagList.Split(',');
-        if (tagList != null && tagList.Length > 0)
+        string[] tagIdList = request.TagIdList.Split(',');
+        if (tagIdList != null && tagIdList.Length > 0 && tagList.Length == tagIdList.Length)
         {
-            foreach (string tagName in tagList)
+            for (int i = 0; i < tagIdList.Length; i++)
             {
-                string name = tagName.Trim();
-                if (!string.IsNullOrEmpty(name))
+                string tagId = tagIdList[i].Trim();
+                if (!string.IsNullOrEmpty(tagId))
                 {
-                    var tag = await _tagRepository.FirstOrDefaultAsync(
-                           (ISpecification<Tag>)new TagByNameSpec(name), cancellationToken);
-                    if (tag != null)
-                    {
-                        postTagList.Add(new PostTag() { Post = post, Tag = tag });
-                    }
+                    post.PostTags.Add(new PostTag() { PostId = post.Id, TagId = new Guid(tagId) });
                 }
             }
-
-            await _posttagRepository.AddRangeAsync(postTagList, cancellationToken);
         }
 
+        post = await _repository.AddAsync(post, cancellationToken);
         return post.Id;
     }
 }

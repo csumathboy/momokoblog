@@ -26,8 +26,8 @@ public partial class Comments
             {
                 new(commt => commt.Id, L["Id"], "Id"),
                 new(commt => commt.Title, L["Title"], "Title"),
-                new(commt => commt.RealName, L["Description"], "Description"),
                 new(commt => commt.Email, L["Email"], "Email"),
+                new(commt => commt.RealName, L["RealName"], "RealName"),
                 new(commt => commt.PostsId, L["PostsId"], "PostsId"),
                 new(commt => commt.PhoneNumber, L["PhoneNumber"], "PhoneNumber")
             },
@@ -35,11 +35,25 @@ public partial class Comments
             idFunc: commt => commt.Id,
             searchFunc: async filter =>
             {
-                var classificationFilter = filter.Adapt<SearchCommentRequest>();
+                var commentFilter = filter.Adapt<SearchCommentRequest>();
  
-                var result = await CommentsClient.SearchAsync(classificationFilter);
+                var result = await CommentsClient.SearchAsync(commentFilter);
                 return result.Adapt<PaginationResponse<CommentDto>>();
             },
+            getDetailsFunc: async (id) =>
+             {
+                 var commentDetail = await CommentsClient.GetAsync(id);
+                 return new CommentViewModel()
+                 {
+                     Id = id,
+                     RealName = commentDetail.RealName,
+                     PostsId = commentDetail.PostsId,
+                     Email = commentDetail.Email,
+                     PhoneNumber = commentDetail.PhoneNumber,
+                     Title = commentDetail.Title,
+                     Description = commentDetail.Description
+                 };
+             },
             createFunc: async commt =>
             {
                 await CommentsClient.CreateAsync(commt.Adapt<CreateCommentRequest>());

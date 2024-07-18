@@ -1,6 +1,6 @@
 using csumathboy.Domain.Common.Events;
 
-namespace csumathboy.Application.Catalog.Products.EventHandlers;
+namespace csumathboy.Application.Posts.EventHandlers;
 
 public class ProductUpdatedEventHandler : EventNotificationHandler<EntityUpdatedEvent<Product>>
 {

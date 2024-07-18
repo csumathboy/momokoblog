@@ -9850,6 +9850,9 @@ namespace csumathboy.Client.Infrastructure.ApiClient
         [Newtonsoft.Json.JsonProperty("instance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? Instance { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("extensions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, object> Extensions { get; set; } = default!;
+
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
         [Newtonsoft.Json.JsonExtensionData]
@@ -10209,6 +10212,9 @@ namespace csumathboy.Client.Infrastructure.ApiClient
         [Newtonsoft.Json.JsonProperty("postsStatus", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public PostStatus PostsStatus { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("postTagName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PostTagName { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -10218,16 +10224,13 @@ namespace csumathboy.Client.Infrastructure.ApiClient
         public System.Guid PostId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("post", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Post? Post { get; set; }
+        public Post Post { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("tagId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid TagId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("tagName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string TagName { get; set; } = default!;
-
         [Newtonsoft.Json.JsonProperty("tag", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Tag? Tag { get; set; } 
+        public Tag Tag { get; set; } = default!;
 
     }
 
@@ -10327,6 +10330,9 @@ namespace csumathboy.Client.Infrastructure.ApiClient
         [Newtonsoft.Json.JsonProperty("tagList", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string TagList { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("tagIdList", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TagIdList { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -10388,6 +10394,9 @@ namespace csumathboy.Client.Infrastructure.ApiClient
 
         [Newtonsoft.Json.JsonProperty("tagList", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string TagList { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("tagIdList", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TagIdList { get; set; } = default!;
 
     }
 
@@ -10466,6 +10475,9 @@ namespace csumathboy.Client.Infrastructure.ApiClient
         [Newtonsoft.Json.JsonProperty("postsId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid PostsId { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Description { get; set; } = default!;
+
         [Newtonsoft.Json.JsonProperty("realName", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string RealName { get; set; } = default!;
 
@@ -10512,6 +10524,9 @@ namespace csumathboy.Client.Infrastructure.ApiClient
         [System.ComponentModel.DataAnnotations.Required]
         [System.ComponentModel.DataAnnotations.StringLength(1024, MinimumLength = 1)]
         public string Title { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("postsId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid PostsId { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? Description { get; set; } = default!;

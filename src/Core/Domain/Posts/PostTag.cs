@@ -10,7 +10,6 @@ public class PostTag : BaseEntity, IAggregateRoot
     public Post Post { get; set; } = default!;
 
     public Guid TagId { get; set; }
-    public string TagName { get; set; } = default!;
 
     public Tag Tag { get; set; } = default!;
 

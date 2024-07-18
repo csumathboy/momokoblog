@@ -28,4 +28,6 @@ public class PostDetailsDto : IDto
     public List<PostTag> PostTags { get; set; } = new();
 
     public PostStatus PostsStatus { get; set; } = default!;
+
+    public string PostTagName { get; set; } = string.Empty;
 }

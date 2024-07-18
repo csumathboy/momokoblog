@@ -8,6 +8,8 @@ public class CommentDetailsDto : IDto
     public string Title { get; set; } = default!;
     public Guid PostsId { get; set; }
     public string RealName { get; set; } = default!;
+    public string Description { get; set; } = default!;
+
     public string Email { get; set; } = default!;
     public string PhoneNumber { get; set; } = default!;
 }

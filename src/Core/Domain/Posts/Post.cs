@@ -23,7 +23,7 @@ public class Post : AuditableEntity, IAggregateRoot
 
     public bool IsTop { get; set; } = false;
 
-    public List<PostTag> PostTags { get; } = new();
+    public List<PostTag> PostTags { get; set; } = new();
 
     public PostStatus PostsStatus { get; set; }
 
@@ -38,6 +38,16 @@ public class Post : AuditableEntity, IAggregateRoot
         Sort = sort;
         IsTop = isTop;
         PostsStatus = postsStatus;
+    }
+
+    public void RemovePostTag(PostTag postTag)
+    {
+        PostTags.Remove(postTag);
+    }
+
+    public void AddPostTag(PostTag postTag)
+    {
+        PostTags.Add(postTag);
     }
 
     public Post ClearImagePath()

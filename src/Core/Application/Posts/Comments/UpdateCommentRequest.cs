@@ -8,6 +8,9 @@ public class UpdateCommentRequest : IRequest<Guid>
 {
     public Guid Id { get; set; }
     public string Title { get; set; } = default!;
+
+    public Guid PostsId { get; set; }
+
     public string? Description { get; set; }
     public string RealName { get; set; } = default!;
     public string Email { get; set; } = default!;

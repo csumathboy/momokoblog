@@ -12,20 +12,34 @@
    </AdvancedSearchContent>
 
     <EditFormContent>
-        <MudItem xs="12" md="6">
+        <MudItem xs="12" md="12">
+          <MudItem xs="12" md="12">
+                @if (context.Id==null)
+                {
+                   <MudTextField Label="@L["PostsId"]" For="@(() => context.PostsId)" @bind-Value="context.PostsId" />
+                }
+                else
+                {
+                    <MudTextField ReadOnly DisableUnderLine  Label="@L["PostsId"]" For="@(() => context.PostsId)" @bind-Value="context.PostsId" />
+                }
+           
+        </MudItem>
             <MudTextField Label="@L["Title"]" For="@(() => context.Title)" @bind-Value="context.Title" />
         </MudItem>
-           <MudItem xs="12" md="6">
+           <MudItem xs="12" md="4">
             <MudTextField Label="@L["Email"]" For="@(() => context.Email)" @bind-Value="context.Email" />
         </MudItem>
-        <MudItem xs="12" md="6">
-            <MudTextField Label="@L["Description"]" For="@(() => context.Description)"
-                @bind-Value="context.Description" />
+           <MudItem xs="12" md="4">
+            <MudTextField Label="@L["RealName"]" For="@(() => context.RealName)" @bind-Value="context.RealName" />
         </MudItem>
-        <MudItem xs="12" md="6">
+      <MudItem xs="12" md="4">
             <MudTextField Label="@L["PhoneNumber"]" For="@(() => context.PhoneNumber)" @bind-Value="context.PhoneNumber" />
         </MudItem>
-      
+        <MudItem xs="12" md="12">
+            <MudTextField Label="@L["Description"]" Lines="4" For="@(() => context.Description)"
+                @bind-Value="context.Description" />
+        </MudItem>
+
     </EditFormContent>
 
 </EntityTable>

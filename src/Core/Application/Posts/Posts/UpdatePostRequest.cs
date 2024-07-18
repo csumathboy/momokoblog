@@ -5,6 +5,8 @@ using csumathboy.Domain.Catalog;
 using csumathboy.Domain.Common.Events;
 using csumathboy.Domain.PostsAggregate;
 using Mapster;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
 
@@ -36,6 +38,7 @@ public class UpdatePostRequest : IRequest<Guid>
 
     public string TagList { get; set; } = string.Empty;
 
+    public string TagIdList { get; set; } = string.Empty;
 
 }
 
@@ -46,9 +49,8 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
     private readonly IFileStorageService _file;
     private readonly IRepository<Classification> _classRepository;
     private readonly IRepository<Tag> _tagRepository;
-    private readonly IRepository<PostTag> _posttagRepository;
-    public UpdatePostRequestHandler(IRepository<Post> repository, IRepository<PostTag> posttagRepository, IRepository<Tag> tagRepository, IRepository<Classification> classRepository, IStringLocalizer<UpdatePostRequestHandler> localizer, IFileStorageService file) =>
-        (_repository, _tagRepository, _posttagRepository, _classRepository, _t, _file) = (repository, tagRepository, posttagRepository, classRepository, localizer, file);
+    public UpdatePostRequestHandler(IRepository<Post> repository, IRepository<Tag> tagRepository, IRepository<Classification> classRepository, IStringLocalizer<UpdatePostRequestHandler> localizer, IFileStorageService file) =>
+        (_repository, _tagRepository, _classRepository, _t, _file) = (repository, tagRepository, classRepository, localizer, file);
 
     public async Task<Guid> Handle(UpdatePostRequest request, CancellationToken cancellationToken)
     {
@@ -136,54 +138,28 @@ public class UpdatePostRequestHandler : IRequestHandler<UpdatePostRequest, Guid>
         // Add Domain Events to be raised after the commit
         post.DomainEvents.Add(EntityUpdatedEvent.WithEntity(post));
 
-        await _repository.UpdateAsync(post, cancellationToken);
-
-        // Delete PostTag
-
-        var deletePostTagList = new List<PostTag>();
-        string requestTagList = request.TagList + ",";
-        foreach (var postTag in post.PostTags)
-        {
-            if (!requestTagList.Contains(postTag.TagName + ","))
-            {
-                deletePostTagList.Add(postTag);
-            }
-        }
-
-        if (deletePostTagList != null && deletePostTagList.Count > 0)
-        {
-            await _posttagRepository.DeleteRangeAsync(deletePostTagList, cancellationToken);
-        }
+        post.PostTags.RemoveAll(o => { return !request.TagIdList.Contains(o.TagId.ToString()); });
 
         // Add New PostTag
-        var postTagList = new List<PostTag>();
-        string[] tagList = request.TagList.Split(',');
-        if (tagList != null && tagList.Length > 0)
+        string[] tagIdList = request.TagIdList.Split(',');
+        if (tagIdList != null && tagIdList.Length > 0)
         {
-            foreach (string tagName in tagList)
+            for (int i = 0; i < tagIdList.Length; i++)
             {
-                string name = tagName.Trim();
-                if (!string.IsNullOrEmpty(name))
+                string tagId = tagIdList[i].Trim();
+                if (!string.IsNullOrEmpty(tagId))
                 {
-                    var exitPostTag = post.PostTags.Where(x => x.TagName.Equals(name)).FirstOrDefault();
+                    var exitPostTag = post.PostTags.Where(x => x.TagId.Equals(new Guid(tagId))).FirstOrDefault();
                     if (exitPostTag == null)
                     {
-                        var tag = await _tagRepository.FirstOrDefaultAsync(
-                               (ISpecification<Tag>)new TagByNameSpec(name), cancellationToken);
-                        if (tag != null)
-                        {
-                            postTagList.Add(new PostTag() { Post = post, Tag = tag, PostId = post.Id, TagId = tag.Id, TagName = tag.Name });
-                        }
+                        post.PostTags.Add(new PostTag() { PostId = post.Id, TagId = new Guid(tagId) });
                     }
-
                 }
             }
-
-            if (postTagList != null && postTagList.Count > 0)
-            {
-                await _posttagRepository.AddRangeAsync(postTagList, cancellationToken);
-            }
         }
+
+        // Update
+        await _repository.UpdateAsync(post, cancellationToken);
 
         return request.Id;
     }

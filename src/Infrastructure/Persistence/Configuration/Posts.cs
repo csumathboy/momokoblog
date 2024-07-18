@@ -84,9 +84,6 @@ public class PostTagConfig : IEntityTypeConfiguration<PostTag>
             x.TagId
         });
         builder
-           .Property(x => x.TagName).IsRequired()
-               .HasMaxLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
-        builder
             .HasOne(x => x.Post)
             .WithMany(x => x.PostTags)
             .HasForeignKey(x => x.PostId);

@@ -6,6 +6,8 @@ using csumathboy.Infrastructure.Common;
 using csumathboy.Infrastructure.Logging.Serilog;
 using Serilog;
 using Serilog.Formatting.Compact;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Newtonsoft.Json;
 
 [assembly: ApiConventionType(typeof(FSHApiConventions))]
 
@@ -19,7 +21,8 @@ try
     builder.Services.AddControllers();
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddApplication();
-
+    builder.Services.AddControllers().AddNewtonsoftJson(option =>
+                option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
     var app = builder.Build();
 
     await app.Services.InitializeDatabasesAsync();

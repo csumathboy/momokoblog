@@ -92,10 +92,12 @@ public partial class Posts
             getDetailsFunc: async (id) =>
             {
                 var postDetail = await PostClient.GetAsync(id);
+
+                // List<string> selecValues = new List<string>(postDetail.PostTagName.Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries));
                 List<string> selecValues = new();
-                foreach (var ptag in postDetail.PostTags)
+                foreach (string tname in postDetail.PostTagName.Split(','))
                 {
-                    selecValues.Add(ptag.TagName);
+                    if(!string.IsNullOrEmpty(tname)) selecValues.Add(tname);
                 }
 
                 return new PostViewModel()
@@ -109,7 +111,7 @@ public partial class Posts
                     IsTop = Convert.ToInt32(postDetail.IsTop),
                     Title = postDetail.Title,
                     Sort = postDetail.Sort,
-                    TagList = string.Join(",", postDetail.PostTags.Select(x => x.TagName).ToList()),
+                    TagList = postDetail.PostTagName,
                     PostsStatus = postDetail.PostsStatus.Value,
                     ImagePath = postDetail.Picture,
                     SelectOptions = selecValues
@@ -134,6 +136,9 @@ public partial class Posts
                     pos.Image = new FileUploadRequest() { Data = pos.ImageInBytes, Extension = pos.ImageExtension ?? string.Empty, Name = $"{pos.Title}_{Guid.NewGuid():N}" };
                 }
 
+                pos.TagList = pos.TagList.Replace(" ", string.Empty);
+                pos.TagIdList = string.Join(",", TagList!.Where(x => pos.TagList.Contains(x.Name)).ToList()
+                        .Select(x => x.Id).ToList());
                 await PostClient.UpdateAsync(id, pos.Adapt<UpdatePostRequest>());
                 pos.ImageInBytes = string.Empty;
             },
