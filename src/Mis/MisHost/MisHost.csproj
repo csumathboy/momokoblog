@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <RootNamespace>csumathboy.Host</RootNamespace>
-        <AssemblyName>csumathboy.Host</AssemblyName>
+        <RootNamespace>csumathboy.MisHost</RootNamespace>
+        <AssemblyName>csumathboy.MisHost</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

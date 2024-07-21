@@ -117,13 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Actions" xml:space="preserve">
+    <value>动作</value>
+  </data>
+  <data name="Advanced Search" xml:space="preserve">
+    <value>高级检索</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>品牌</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="Confirm" xml:space="preserve">
-    <value>确认</value>
+  <data name="Classification" xml:space="preserve">
+    <value>分类</value>
   </data>
-  <data name="Delete Confirmation" xml:space="preserve">
-    <value>确定删除</value>
+  <data name="Create" xml:space="preserve">
+    <value>创建</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="Post" xml:space="preserve">
+    <value>文章</value>
+  </data>
+  <data name="Posts" xml:space="preserve">
+    <value>博客</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>产品</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>产品信息</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>重新加载</value>
+  </data>
+  <data name="Search for" xml:space="preserve">
+    <value>查找</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>用户</value>
   </data>
 </root>

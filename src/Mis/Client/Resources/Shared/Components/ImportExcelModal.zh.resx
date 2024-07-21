@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>取消</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Import</value>
+    <value>导出</value>
   </data>
   <data name="Please upload excel file!" xml:space="preserve">
-    <value>Please upload excel file!</value>
+    <value>请上车Excel表格</value>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>Upload</value>
+    <value>上传</value>
   </data>
 </root>

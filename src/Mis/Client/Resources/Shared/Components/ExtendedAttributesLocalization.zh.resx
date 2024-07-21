@@ -118,28 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Actions" xml:space="preserve">
-    <value>Actions</value>
+    <value>操作</value>
   </data>
   <data name="All Groups" xml:space="preserve">
-    <value>All Groups</value>
+    <value>所有组</value>
   </data>
   <data name="Bordered" xml:space="preserve">
     <value>Bordered</value>
   </data>
   <data name="Create" xml:space="preserve">
-    <value>Create</value>
+    <value>创建</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>删除</value>
   </data>
   <data name="Delete Extended Attribute?" xml:space="preserve">
-    <value>Delete Extended Attribute?</value>
+    <value>确定删除吗?</value>
   </data>
   <data name="Dense" xml:space="preserve">
     <value>Dense</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>描述</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>

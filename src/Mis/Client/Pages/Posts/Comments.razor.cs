@@ -31,7 +31,7 @@ public partial class Comments
                 new(commt => commt.PostsId, L["PostsId"], "PostsId"),
                 new(commt => commt.PhoneNumber, L["PhoneNumber"], "PhoneNumber")
             },
-            enableAdvancedSearch: false,
+            enableAdvancedSearch: true,
             idFunc: commt => commt.Id,
             searchFunc: async filter =>
             {
@@ -70,5 +70,4 @@ public partial class Comments
 
 public class CommentViewModel : UpdateCommentRequest
 {
- 
 }
