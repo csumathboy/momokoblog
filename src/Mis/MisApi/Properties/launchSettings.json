@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Host": {
+    "MisApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,

@@ -50,6 +50,7 @@
     <ItemGroup>
       <Folder Include="Databases\Host\" />
       <Folder Include="Logs\" />
+      <Folder Include="wwwroot\" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\..\Core\Application\Application.csproj" />
